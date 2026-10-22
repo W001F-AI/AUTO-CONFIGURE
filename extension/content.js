@@ -371,43 +371,60 @@
     }
 
     // 2. Intelligent Auto-Navigation to WAN Settings if not currently on WAN form
-    const zteMainInternet = document.querySelector('#mainNavigator #internet, #mainNavigator #mmInternet, a[title*="Internet"]');
-    const zteWanContainer = document.getElementById('Internet_container');
-    if (zteMainInternet && !zteWanContainer && !document.querySelector('input[type="password"]')) {
+    function findWanMenu() {
+      const zteSel = document.querySelector('#smWAN, #sub_Internet_wan, #sub_wan, li[id*="wan" i], a[id*="wan" i], a[title="WAN" i], li[title="WAN" i], a[href*="wan" i], a[onclick*="wan" i], [data-target*="wan" i]');
+      if (zteSel) return zteSel;
+      const candidates = document.querySelectorAll('a, li, span, div');
+      for (let i = 0; i < candidates.length; i++) {
+        const t = (candidates[i].innerText || candidates[i].textContent || '').trim().replace(/\s+/g, ' ').toUpperCase();
+        if (t === 'WAN' || t === 'إعدادات WAN' || t === 'WAN CONFIG' || t === 'WAN CONFIGURATION') {
+          const isDsl = (candidates[i].className || '').toLowerCase().includes('dsl') || (candidates[i].id || '').toLowerCase().includes('dsl');
+          if (!isDsl) return candidates[i].closest('a, li') || candidates[i];
+        }
+      }
+      return null;
+    }
+
+    const wanBtn = findWanMenu();
+    const hasPassword = !!document.querySelector('input[type="password"]');
+
+    if (wanBtn && !hasPassword) {
       statusBox.className = 'status-alert success';
-      statusBox.innerHTML = '🧭 جاري فتح صفحة إعدادات الإنترنت (WAN) في راوتر ZTE تلقائياً...';
-      zteMainInternet.click();
-      setTimeout(() => {
-        const zteWanSide = document.querySelector('#commLeft a[title*="WAN"], #commLeft .selectClass2Menu');
-        if (zteWanSide) zteWanSide.click();
-        setTimeout(() => executeRouterFilling(username, password, wifiSsid, wifiPass), 1000);
-      }, 800);
+      statusBox.innerHTML = '🧭 تم العثور على تبويب WAN، جاري الانتقال إليه تلقائياً...';
+      const a = (wanBtn.tagName === 'A') ? wanBtn : (wanBtn.querySelector('a') || wanBtn);
+      a.click();
+      setTimeout(() => executeRouterFilling(username, password, wifiSsid, wifiPass), 1000);
       return;
     }
 
     // 3. Fill WAN / PPPoE Credentials with ZTE H188A Intelligent DOM Discovery
+    // Expand collapsed accordions if present
+    document.querySelectorAll('.accordion-header, a[title*="Modify" i], a[title*="Edit" i], input[value*="Modify" i], .modify-btn, .edit-icon').forEach(el => {
+      try { el.click(); } catch(e) {}
+    });
+
     let wanUser = null;
     let wanPass = null;
 
     // Find WAN password element
     const allPassInputs = [...document.querySelectorAll('input[type="password"]')].filter(el => el.offsetParent !== null && !el.disabled);
-    wanPass = allPassInputs.find(el => el.id !== 'Password' && el.id !== 'pc-login-password') || allPassInputs[0];
+    wanPass = allPassInputs.find(el => el.id !== 'pc-login-password' && el.id !== 'password_login') || allPassInputs[0];
 
     // Find matching username in same table / row / container (ZTE H188A pattern)
     if (wanPass) {
       const container = wanPass.closest('table, form, #Internet_container, .content, tbody') || wanPass.parentElement.parentElement.parentElement;
       if (container) {
         const textInputs = [...container.querySelectorAll('input[type="text"], input:not([type])')].filter(el => el.offsetParent !== null && !el.disabled && !el.readOnly);
-        wanUser = textInputs.find(el => el.id.toLowerCase().includes('user') || el.name.toLowerCase().includes('user')) || textInputs[0];
+        wanUser = textInputs.find(el => el.id.toLowerCase().includes('user') || el.name.toLowerCase().includes('user') || el.id.toLowerCase().includes('ppp') || el.name.toLowerCase().includes('ppp')) || textInputs[0];
       }
     }
 
     // Fallbacks
     if (!wanUser) {
-      wanUser = document.querySelector('input[name="username"], #username, #UserName, #Frm_Username, #pppoe-username, #WAN_Username, input[id*="user" i]');
+      wanUser = document.querySelector('input[name="username"], #username, #UserName, #Frm_Username, #Frm_PPPUsername, #pppoe-username, #WAN_Username, input[name="Username"], input[id*="user" i]');
     }
     if (!wanPass) {
-      wanPass = document.querySelector('input[name="password"], #password, #Password, #Frm_Password, #pppoe-password, #WAN_Password, input[id*="pass" i]');
+      wanPass = document.querySelector('input[name="password"], #password, #Password, #Frm_Password, #Frm_PPPPassword, #pppoe-password, #WAN_Password, input[name="Password"], input[id*="pass" i]');
     }
 
     if (wanUser && username) {

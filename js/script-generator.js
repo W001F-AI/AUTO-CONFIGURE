@@ -38,6 +38,10 @@ const ScriptGenerator = {
     setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 500); }, 7000);
   }
 
+  // Expand collapsed WAN sections or edit buttons
+  const expanders = document.querySelectorAll('.accordion-header, a[title*="Modify" i], a[title*="Edit" i], input[value*="Modify" i], input[value*="Edit" i], .modify-btn, .edit-icon, .zte-icon-edit');
+  expanders.forEach(el => { try { el.click(); } catch(e) {} });
+
   let filledCount = 0;
   const userVal = "${cleanUser}";
   const passVal = "${password}";
@@ -48,23 +52,23 @@ const ScriptGenerator = {
 
   // 1. Find WAN password field
   const allPassInputs = [...document.querySelectorAll('input[type="password"]')].filter(el => el.offsetParent !== null && !el.disabled);
-  targetPass = allPassInputs.find(el => el.id !== 'Password' && el.id !== 'pc-login-password') || allPassInputs[0];
+  targetPass = allPassInputs.find(el => el.id !== 'pc-login-password' && el.id !== 'password_login') || allPassInputs[0];
 
   // 2. Find matching username field in the same container / table (ZTE H188A / H168N pattern)
   if (targetPass) {
     const container = targetPass.closest('table, form, #Internet_container, .content, tbody') || targetPass.parentElement.parentElement.parentElement;
     if (container) {
       const textInputs = [...container.querySelectorAll('input[type="text"], input:not([type])')].filter(el => el.offsetParent !== null && !el.disabled && !el.readOnly);
-      targetUser = textInputs.find(el => el.id.toLowerCase().includes('user') || el.name.toLowerCase().includes('user')) || textInputs[0];
+      targetUser = textInputs.find(el => el.id.toLowerCase().includes('user') || el.name.toLowerCase().includes('user') || el.id.toLowerCase().includes('ppp') || el.name.toLowerCase().includes('ppp')) || textInputs[0];
     }
   }
 
   // Fallback direct selectors
   if (!targetUser) {
-    targetUser = document.querySelector('input[name="username"], #username, #UserName, #Frm_Username, #pppoe-username, #WAN_Username, input[id*="user" i]');
+    targetUser = document.querySelector('input[name="username"], #username, #UserName, #Frm_Username, #Frm_PPPUsername, #pppoe-username, #WAN_Username, input[name="Username"], input[id*="user" i]');
   }
   if (!targetPass) {
-    targetPass = document.querySelector('input[name="password"], #password, #Password, #Frm_Password, #pppoe-password, #WAN_Password, input[id*="pass" i]');
+    targetPass = document.querySelector('input[name="password"], #password, #Password, #Frm_Password, #Frm_PPPPassword, #pppoe-password, #WAN_Password, input[name="Password"], input[id*="pass" i]');
   }
 
   if (targetUser && userVal) {
@@ -107,15 +111,17 @@ const ScriptGenerator = {
   ` : ''}
 
   if (filledCount > 0) {
+    const nextBtn = document.querySelector('input[value="Next"], button.next, input[value="التالي"]');
     const applyBtn = document.querySelector('input[value="Apply"], input[value="حفظ"], #applyBtn, #save-btn, #Btn_Apply, button.Apply, input[type="button"][value="Apply"]');
-    if (applyBtn) {
-      setTimeout(() => { applyBtn.click(); }, 600);
-      showOrangeToast("تم تعبئة رقم خدمة أورانج (" + userVal + ") والضغط على حفظ تلقائياً! ستعمل الخدمة خلال ثوانٍ. 🎉", true);
+    const targetBtn = nextBtn || applyBtn;
+    if (targetBtn) {
+      setTimeout(() => { targetBtn.click(); }, 600);
+      showOrangeToast("تم تعبئة رقم خدمة أورانج (" + userVal + ") والضغط على " + (nextBtn ? 'Next' : 'Apply / حفظ') + " تلقائياً! ستعمل الخدمة خلال ثوانٍ. 🎉", true);
     } else {
       showOrangeToast("تم تعبئة بيانات خدمة أورانج بنجاح! راجع الخانات واضغط Apply / حفظ بالأسفل.", true);
     }
   } else {
-    showOrangeToast("يرجى التأكد من أنك واقف على صفحة WAN أو DSL Connection داخل صفحة الراوتر.", false);
+    showOrangeToast("يرجى التأكد من أنك واقف على صفحة WAN أو إعدادات الإنترنت داخل صفحة الراوتر.", false);
   }
 })();
     `.trim();
@@ -137,7 +143,7 @@ const ScriptGenerator = {
       var old=document.getElementById('orange-smart-toast');if(old)old.remove();
       function toast(title,msg,isErr,actionHtml){
         var t=document.createElement('div');t.id='orange-smart-toast';
-        t.style.cssText='position:fixed;top:18px;left:50%;transform:translateX(-50%);background:rgba(17,20,27,0.96);color:#fff;padding:16px 20px;border-radius:16px;z-index:2147483647;border:2px solid '+(isErr?'#FF3B30':'#FF7900')+';box-shadow:0 14px 45px rgba(255,121,0,0.5);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Cairo,sans-serif;font-size:14px;direction:rtl;text-align:right;line-height:1.6;max-width:92vw;width:440px;box-sizing:border-box;backdrop-filter:blur(10px);transition:all .3s ease;';
+        t.style.cssText='position:fixed;top:18px;left:50%;transform:translateX(-50%);background:rgba(17,20,27,0.97);color:#fff;padding:16px 20px;border-radius:16px;z-index:2147483647;border:2px solid '+(isErr?'#FF3B30':'#FF7900')+';box-shadow:0 14px 45px rgba(255,121,0,0.5);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Cairo,sans-serif;font-size:14px;direction:rtl;text-align:right;line-height:1.6;max-width:92vw;width:440px;box-sizing:border-box;transition:all .3s ease;';
         t.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:22px;">'+(isErr?'⚠️':'🍊')+'</span><strong style="color:#FF7900;font-size:15px;font-weight:800;">'+title+'</strong></div><span style="cursor:pointer;color:#8E99AB;font-size:18px;font-weight:bold;" onclick="this.parentElement.parentElement.remove()">✕</span></div><div style="color:#E2E8F0;font-size:13.5px;margin-bottom:'+(actionHtml?'10px':'0')+';">'+msg+'</div>'+(actionHtml||'');
         document.body.appendChild(t);
         setTimeout(function(){if(t.parentNode){t.style.opacity='0';t.style.transform='translateX(-50%) translateY(-10px)';setTimeout(function(){t.remove();},400);}},8500);
@@ -146,7 +152,7 @@ const ScriptGenerator = {
       var uStr=decodeURIComponent('${u}');
       var pStr=decodeURIComponent('${p}');
       if(!uStr){
-        toast('اكتب رقم تليفونك أولاً ⚠️','يرجى العودة لموقع أورانج وكتابة رقم التليفون الأرضي وباسورد الرسالة، ثم أعد نسخ أو حفظ البوكماركليت.',true);
+        toast('اكتب رقم تليفونك أولاً ⚠️','يرجى كتابة رقم التليفون الأرضي وباسورد الرسالة في أداة أورانج، ثم اضغط تشغيل.',true);
         return;
       }
 
@@ -188,6 +194,24 @@ const ScriptGenerator = {
         return res;
       }
 
+      function robustClick(target){
+        if(!target)return;
+        var a=(target.tagName==='A')?target:(target.querySelector('a')||target);
+        var events=['pointerdown','touchstart','mousedown','pointerup','touchend','mouseup','click'];
+        for(var i=0;i<events.length;i++){
+          try{
+            var evt=new MouseEvent(events[i],{bubbles:true,cancelable:true,view:window});
+            a.dispatchEvent(evt);
+          }catch(e){}
+        }
+        try{a.click();}catch(e){}
+        if(target!==a){try{target.click();}catch(e){}}
+        var oc=a.getAttribute('onclick')||target.getAttribute('onclick');
+        if(oc){
+          try{new Function(oc).call(a);}catch(e){}
+        }
+      }
+
       function fire(el,val){
         if(el&&el.offsetParent!==null){
           el.value=decodeURIComponent(val);
@@ -200,15 +224,18 @@ const ScriptGenerator = {
       }
 
       function findWanMenu(){
-        var sel=qry('#smWAN,#mmWAN,#WAN,#wan,#dsl_connection,li[id*="WAN" i],a[id*="WAN" i],a[title*="WAN" i],li[title*="WAN" i],a[href*="wan" i],a[onclick*="wan" i]');
-        if(sel)return sel;
+        var zteSel=qry('#smWAN,#sub_Internet_wan,#sub_wan,li[id*="wan" i],a[id*="wan" i],a[title="WAN" i],li[title="WAN" i],a[href*="wan" i],a[onclick*="wan" i],[data-target*="wan" i]');
+        if(zteSel)return zteSel;
+
         var ds=getDocs();
         for(var d=0;d<ds.length;d++){
           var candidates=ds[d].querySelectorAll('a,li,span,div');
           for(var i=0;i<candidates.length;i++){
-            var t=(candidates[i].textContent||'').trim();
-            if(t==='WAN'||t==='wan'||t==='DSL Connection'||t==='إعدادات WAN'){
-              return candidates[i].closest('a,li')||candidates[i];
+            var raw=(candidates[i].innerText||candidates[i].textContent||'').trim();
+            var t=raw.replace(/\\s+/g,' ').toUpperCase();
+            if(t==='WAN'||t==='إعدادات WAN'||t==='WAN CONFIG'||t==='WAN CONFIGURATION'){
+              var isDsl=(candidates[i].className||'').toLowerCase().indexOf('dsl')>-1||(candidates[i].id||'').toLowerCase().indexOf('dsl')>-1;
+              if(!isDsl)return candidates[i].closest('a,li')||candidates[i];
             }
           }
         }
@@ -220,10 +247,10 @@ const ScriptGenerator = {
         if(sel)return sel;
         var ds=getDocs();
         for(var d=0;d<ds.length;d++){
-          var candidates=ds[d].querySelectorAll('a,li,span,div');
+          var candidates=ds[d].querySelectorAll('a,li,span');
           for(var i=0;i<candidates.length;i++){
-            var t=(candidates[i].textContent||'').trim();
-            if(t==='Internet'||t==='الإنترنت'){
+            var t=(candidates[i].textContent||'').trim().toUpperCase();
+            if(t==='INTERNET'||t==='الإنترنت'){
               return candidates[i].closest('a,li')||candidates[i];
             }
           }
@@ -234,7 +261,7 @@ const ScriptGenerator = {
       var host=location.hostname;
       var isRouterHost=host==='192.168.1.1'||host==='192.168.0.1'||host==='192.168.1.254'||host.indexOf('192.168.')===0;
 
-      /* Check In-App Simulator presence */
+      /* In-App Simulator Check */
       var simBox=document.getElementById('simulator-viewport');
       if(!isRouterHost&&simBox){
         var simUser=simBox.querySelector('input[type="text"]');
@@ -252,13 +279,13 @@ const ScriptGenerator = {
         }
       }
 
-      /* Check if on foreign non-router site */
+      /* Non-router site warning */
       if(!isRouterHost&&!document.querySelector('input[type="password"]')){
-        toast('تنبيه: أنت لست في صفحة الراوتر','يرجى فتح صفحة الراوتر (192.168.1.1) أولاً، ثم تشغيل هذا الزر هناك ليقوم بالبرمجة تلقائياً.',true,'<a href="http://192.168.1.1" target="_blank" style="display:inline-block;background:#FF7900;color:#fff;padding:6px 14px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:12px;margin-top:4px;">🚀 فتح 192.168.1.1 الآن</a>');
+        toast('تنبيه: افتح صفحة الراوتر أولاً 🌐','يرجى فتح صفحة الراوتر (192.168.1.1) في تبويب مجاور، ثم تشغيل هذا الزر هناك ليقوم بالبرمجة تلقائياً.',true,'<a href="http://192.168.1.1" target="_blank" style="display:inline-block;background:#FF7900;color:#fff;padding:8px 16px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:13px;margin-top:6px;">🚀 فتح 192.168.1.1 الآن</a>');
         return;
       }
 
-      /* 1. Router Login Screen Detection */
+      /* Login Screen Detection */
       var loginUser=qry('#LoginId,#Frm_Username,#pc-login-username,input[name="username"],#username_login,#txt_username');
       var loginPass=qry('#Password,#Frm_Password,#pc-login-password,input[name="password"],#password_login,#txt_password');
       var loginBtn=qry('#btnLogin,#btnSubmit,#pc-login-btn,input[value="Login"],input[value="تسجيل الدخول"],button[type="submit"],.zte-login-btn,.hw-submit-btn');
@@ -275,18 +302,29 @@ const ScriptGenerator = {
         return;
       }
 
-      /* 2. WAN PPPoE Fields Discovery & Navigation */
+      /* WAN & Wizard Auto-Fill Engine */
       var navStep=0;
       function runWanFill(){
         navStep++;
         var filled=0;
-        var passInputs=qryAll('input[type="password"]');
-        var passEl=passInputs.find(function(e){
-          var id=(e.id||'').toLowerCase();
-          return id!=='password'&&id!=='frm_password'&&id!=='pc-login-password'&&id!=='password_login';
-        })||passInputs[0];
 
-        var userEl=qry('#Username,#UserName,#Frm_Username,#Frm_PPPUsername,#pppoe-username,#WAN_Username,#wan_username,#txt_username,input[name*="user" i]:not(#LoginId):not(#pc-login-username)');
+        /* Expand collapsed WAN sections or click modify icons */
+        var expanders=qryAll('.accordion-header,a[title*="Modify" i],a[title*="Edit" i],input[value*="Modify" i],input[value*="Edit" i],.modify-btn,.edit-icon,.zte-icon-edit,a[onclick*="modify" i],a[onclick*="edit" i]');
+        for(var ex=0;ex<expanders.length;ex++){
+          try{expanders[ex].click();}catch(e){}
+        }
+
+        /* Discover WAN or Wizard inputs */
+        var passInputs=qryAll('input[type="password"]');
+        var passEl=null;
+        if(passInputs.length>0){
+          passEl=passInputs.find(function(e){
+            var id=(e.id||'').toLowerCase();
+            return id!=='pc-login-password'&&id!=='password_login'&&id!=='oldpassword';
+          })||passInputs[0];
+        }
+
+        var userEl=qry('#Username,#UserName,#Frm_Username,#Frm_PPPUsername,#pppoe-username,#WAN_Username,#wan_username,#txt_username,input[name="Username"],input[name="PPPUsername"],input[name*="user" i]:not(#LoginId):not(#pc-login-username)');
 
         if(!userEl&&passEl){
           var c=(passEl.closest?passEl.closest('table,form,.form-horizontal,.zte-wizard-modal,#Internet_container,.content,tbody'):null)||(passEl.parentElement&&passEl.parentElement.parentElement&&passEl.parentElement.parentElement.parentElement);
@@ -302,12 +340,15 @@ const ScriptGenerator = {
           fire(qry('#INPUT_SSID2,#Frm_ESSID,#ssid-input,input[name*="ssid" i]'),'${s}');
           fire(qry('#WpaPskKey,#Frm_KeyPassphrase,#KeyPassphrase,input[name*="wpa" i]'),'${w}');
 
-          var applyBtn=qry('input[value="Apply"],input[value="حفظ"],input[value="Next"],#applyBtn,#save-btn,#Btn_Apply,button.Apply,.zte-btn-orange,input[type="button"][value="Apply"]');
+          var nextBtn=qry('input[value="Next"],button.next,input[value="التالي"]');
+          var applyBtn=qry('input[value="Apply"],input[value="حفظ"],#applyBtn,#save-btn,#Btn_Apply,button.Apply,.zte-btn-orange,input[type="button"][value="Apply"]');
+
           if(filled>0){
-            if(applyBtn){
-              applyBtn.style.outline='3px solid #00D26A';
-              setTimeout(function(){applyBtn.click();},600);
-              toast('تمت البرمجة بنجاح! 🎉','تم إدخال رقم الخدمة <strong>('+uStr+')</strong> وكلمة المرور، والضغط على <strong>حفظ/Apply</strong> تلقائياً! 🚀',false);
+            var targetBtn=nextBtn||applyBtn;
+            if(targetBtn){
+              targetBtn.style.outline='3px solid #00D26A';
+              setTimeout(function(){robustClick(targetBtn);},600);
+              toast('تمت البرمجة بنجاح! 🎉','تم إدخال رقم الخدمة <strong>('+uStr+')</strong> وكلمة المرور، والضغط على <strong>'+(nextBtn?'Next':'حفظ / Apply')+'</strong> تلقائياً! 🚀',false);
             }else{
               toast('تم تعبئة البيانات بنجاح! ⚡','تم إدخال رقم الخدمة <strong>('+uStr+')</strong> والباسورد.<br>يرجى الضغط على زر Apply / حفظ بالأسفل.',false);
             }
@@ -315,43 +356,41 @@ const ScriptGenerator = {
           }
         }
 
-        /* Avoid infinite loop (max 3 tries) */
-        if(navStep>=4){
-          toast('خطوة أخيرة مطلوبة يدويًا 💡','اضغط بإصبعك على تبويب <strong>WAN</strong> في القائمة باليسار، ثم اضغط على زر البوكماركليت مرة واحدة وسيقوم بملء كل شيء فوراً!',true);
-          return;
-        }
-
-        /* 1. Check if WAN sub-menu is visible (e.g. on ZTE Internet page like in the iPhone screenshot) */
+        /* Switch from Status (DSL Info) to WAN */
         var wanBtn=findWanMenu();
         if(wanBtn){
-          toast('جاري فتح إعدادات WAN... ⚡','تم العثور على تبويب WAN، جاري فتحه فوراً...',false);
-          wanBtn.click();
-          setTimeout(function(){
-            var editBtn=qry('a[title*="Modify" i],a[title*="Edit" i],input[value*="Modify" i],input[value*="Edit" i],.modify-btn,.edit-icon,a[onclick*="modify" i],a[onclick*="edit" i]');
-            if(editBtn)editBtn.click();
-            setTimeout(runWanFill,600);
-          },700);
-          return;
+          toast('جاري فتح إعدادات WAN... ⚡','تم العثور على تبويب WAN، جاري الانتقال إليه فوراً...',false);
+          robustClick(wanBtn);
+          try{
+            var win=wanBtn.ownerDocument.defaultView||window;
+            if(typeof win.clickSubMenu==='function')win.clickSubMenu('WAN');
+            else if(typeof win.top.clickSubMenu==='function')win.top.clickSubMenu('WAN');
+            if(typeof win.changeSubMenu==='function')win.changeSubMenu('WAN');
+            else if(typeof win.top.changeSubMenu==='function')win.top.changeSubMenu('WAN');
+          }catch(e){}
+
+          if(navStep<4){
+            setTimeout(runWanFill,900);
+            return;
+          }
         }
 
-        /* 2. If not in Internet yet, click Internet then WAN */
-        var netMenu=findInternetMenu();
-        if(netMenu){
-          toast('جاري الانتقال لصفحة الإنترنت... ⏳','جاري فتح تبويب الإنترنت (Internet) ثم WAN تلقائياً...',false);
-          netMenu.click();
-          setTimeout(function(){
-            var w=findWanMenu();
-            if(w)w.click();
-            setTimeout(runWanFill,800);
-          },600);
-          return;
+        /* If neither WAN inputs nor WAN menu is visible, navigate to Internet tab */
+        if(navStep===1&&!wanBtn){
+          var netMenu=findInternetMenu();
+          if(netMenu){
+            toast('جاري الانتقال لصفحة الإنترنت... ⏳','جاري فتح تبويب الإنترنت (Internet) تلقائياً...',false);
+            robustClick(netMenu);
+            setTimeout(runWanFill,900);
+            return;
+          }
         }
 
-        toast('لم نتمكن من تحديد الخانات ⚠️','يرجى الضغط على تبويب <strong>Internet</strong> ثم <strong>WAN</strong> في الراوتر، ثم الضغط على هذا الزر.',true);
+        toast('خطوة أخيرة مطلوبة يدويًا 💡','اضغط بإصبعك على تبويب <strong>WAN</strong> في القائمة باليسار، ثم اضغط على زر البوكماركليت مرة واحدة وسيقوم بملء كل شيء فوراً!',true);
       }
 
       runWanFill();
-    })();`.replace(/\s+/g, ' ');
+    })();`.replace(/\\s+/g, ' ');
   },
 
   /**

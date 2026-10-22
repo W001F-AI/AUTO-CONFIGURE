@@ -1322,13 +1322,14 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(10, 13, 20, 0.95);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border-subtle);
+    background: #0D1017;
+    border-top: 1px solid rgba(255, 121, 0, 0.25);
     padding: 8px 12px;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom, 15px));
     z-index: 9999;
     justify-content: space-around;
     align-items: center;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.6);
   }
 
   .mobile-nav-item {
@@ -1355,8 +1356,10 @@
     font-size: 1.25rem;
   }
 
-  body {
-    padding-bottom: 75px;
+  /* Single-column router cards on mobile for easy tap target */
+  .router-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 

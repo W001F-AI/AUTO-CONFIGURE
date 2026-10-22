@@ -120,7 +120,44 @@
         <div class="wiring-grid">
           <!-- 3D Wiring Diagram Image -->
           <div class="wiring-image-card">
-            <img src="/assets/images/orange_splitter.jpg" alt="طريقة توصيل سبليتر وكابلات راوتر أورانج" />
+            <img src="./assets/images/orange_splitter.jpg" alt="طريقة توصيل سبليتر وكابلات راوتر أورانج" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <div class="splitter-svg-fallback" style="display:none; padding:20px; background:#11151F; text-align:center;">
+              <svg viewBox="0 0 320 180" style="width:100%; max-width:320px; margin:0 auto; display:block;">
+                <!-- Wall Jack -->
+                <rect x="10" y="70" width="40" height="40" rx="4" fill="#222838" stroke="#8E99AB" stroke-width="2"/>
+                <text x="30" y="95" fill="#fff" font-size="9" font-family="sans-serif" font-weight="bold" text-anchor="middle">الحائط</text>
+                
+                <!-- Wire to Splitter -->
+                <line x1="50" y1="90" x2="100" y2="90" stroke="#FF7900" stroke-width="3" stroke-dasharray="4,2"/>
+                
+                <!-- Splitter Box -->
+                <rect x="100" y="50" width="110" height="80" rx="8" fill="#181D2A" stroke="#FF7900" stroke-width="2"/>
+                <rect x="105" y="55" width="14" height="14" rx="2" fill="#FF7900"/>
+                <text x="155" y="72" fill="#fff" font-size="11" font-family="sans-serif" font-weight="bold" text-anchor="middle">SPLITTER</text>
+                
+                <!-- Ports -->
+                <rect x="105" y="82" width="22" height="16" rx="2" fill="#0E1118" stroke="#FF7900"/>
+                <text x="116" y="93" fill="#FF7900" font-size="7" font-weight="bold" text-anchor="middle">LINE</text>
+                
+                <rect x="180" y="65" width="25" height="16" rx="2" fill="#0E1118" stroke="#00D26A"/>
+                <text x="192" y="76" fill="#00D26A" font-size="7" font-weight="bold" text-anchor="middle">MODEM</text>
+                
+                <rect x="180" y="95" width="25" height="16" rx="2" fill="#0E1118" stroke="#3B82F6"/>
+                <text x="192" y="106" fill="#3B82F6" font-size="7" font-weight="bold" text-anchor="middle">PHONE</text>
+                
+                <!-- Wires to Devices -->
+                <line x1="205" y1="73" x2="255" y2="55" stroke="#00D26A" stroke-width="3"/>
+                <line x1="205" y1="103" x2="255" y2="125" stroke="#3B82F6" stroke-width="3"/>
+                
+                <!-- Router -->
+                <rect x="255" y="35" width="55" height="40" rx="6" fill="#1B2232" stroke="#00D26A" stroke-width="2"/>
+                <text x="282" y="58" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">الراوتر 📟</text>
+                
+                <!-- Phone -->
+                <rect x="255" y="105" width="55" height="40" rx="6" fill="#1B2232" stroke="#3B82F6" stroke-width="2"/>
+                <text x="282" y="128" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">تليفون ☎️</text>
+              </svg>
+            </div>
             <div class="wiring-caption">
               💡 <strong>التوصيل الصحيح:</strong> كابل التليفون من الحائط يدخل في منفذ <strong>LINE</strong> بالسبليتر، ومنفذ <strong>MODEM</strong> يخرج منه كابل الراوتر، ومنفذ <strong>PHONE</strong> للعدة الأرضية.
             </div>

@@ -117,7 +117,19 @@ const App = {
       <div class="router-card ${router.id === this.selectedRouterId ? 'selected' : ''}" onclick="App.selectRouter('${router.id}')">
         ${router.badge ? `<span class="router-badge-top">${router.badge}</span>` : ''}
         <div class="router-thumb-wrap">
-          <img src="${router.image}" alt="${router.nameAr}" loading="lazy" />
+          <img src="${router.image}" alt="${router.nameAr}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="router-svg-fallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; background:linear-gradient(135deg, #0e121a, #161c28); flex-direction:column; gap:8px;">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+              <rect x="8" y="24" width="48" height="24" rx="6" fill="#1B2232" stroke="#FF7900" stroke-width="2"/>
+              <rect x="14" y="28" width="6" height="6" rx="2" fill="#FF7900"/>
+              <circle cx="28" cy="36" r="2.5" fill="#00D26A"/>
+              <circle cx="36" cy="36" r="2.5" fill="#00D26A"/>
+              <circle cx="44" cy="36" r="2.5" fill="#00D26A"/>
+              <line x1="16" y1="24" x2="16" y2="12" stroke="#8E99AB" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="48" y1="24" x2="48" y2="12" stroke="#8E99AB" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <span style="font-size:0.78rem; font-weight:700; color:#FF7900;">${router.nameAr}</span>
+          </div>
         </div>
         <div class="router-card-body">
           <h4 class="router-card-title">${router.nameAr}</h4>
