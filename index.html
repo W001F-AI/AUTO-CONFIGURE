@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Orange SmartConnect | أورانج رفيق الراوتر الذكي</title>
+  <meta name="description" content="البوابة الرسمية الذكية لتفعيل وضبط راوتر أورانج والإنترنت المنزلي في 3 دقائق بخطوات بسيطة وبدون انتظار الدعم الفني" />
+  <link rel="icon" href="assets/icons/favicon.png" />
+  
+  <!-- PWA & Mobile Meta Tags -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#FF7900" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Orange Smart" />
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+
+  <!-- ==========================================================================
+       SITE HEADER
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="brand-wrapper" id="brand-link">
+        <div class="orange-square-logo">
+          <svg viewBox="0 0 24 24">
+            <rect width="24" height="24" rx="4" fill="#FF7900"/>
+            <path d="M12 4C7.58 4 4 7.58 4 12s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Orange <span class="highlight">SmartConnect</span> <span class="brand-badge">Digital Self-Care</span></h1>
+          <div class="brand-subtext">البوابة الموحدة لتفعيل وإعداد راوترات الإنترنت المنزلي DSL / VDSL</div>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <button class="btn-mobile-test" onclick="App.showMobileModal()" title="افتح التطبيق على هاتفك المحمول فوراً">
+          📱 جرب على الموبايل
+        </button>
+        <div class="manager-credit-pill">
+          <span>🍊 <strong>Orange Egypt</strong> | خدمة التفعيل الذاتي الفوري</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== -->
+  <main class="main-content">
+    
+    <!-- Hero Intro Banner -->
+    <section class="hero-banner">
+      <div class="hero-badge">🚀 تفعيل فوري بدون انتظار خدمة العملاء 16333</div>
+      <h2 class="hero-title">
+        شغّل نت أورانج في <span class="text-gradient">3 دقائق فقط</span> بنفسك!
+      </h2>
+      <p class="hero-desc">
+        استلمت راوتر أورانج أو حولت خطك وجاتلك رسالة الـ SMS؟ اتبع الخطوات البسيطة دي بالصور والمحاكاة التفاعلية، والنت هيشتغل معاك فوراً في بيتك.
+      </p>
+
+      <!-- PWA Install Banner -->
+      <div class="pwa-banner" id="pwa-install-banner" style="display:none;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <img src="assets/icons/favicon.png" alt="Orange Icon" style="width:36px;height:36px;border-radius:8px;" />
+          <div>
+            <strong style="color:#fff; font-size:0.95rem;">ثبّت تطبيق أورانج على هاتفك الذكي 📱</strong>
+            <div style="font-size:0.8rem; color:var(--text-muted);">تصفح سريع بدون إنترنت وبدون الحاجة لمتجر التطبيقات</div>
+          </div>
+        </div>
+        <button class="btn-primary" id="pwa-install-btn" style="padding:6px 18px; font-size:0.85rem;">
+          تثبيت الآن
+        </button>
+      </div>
+    </section>
+
+    <!-- 5-Step Journey Tracker -->
+    <nav class="journey-tracker" aria-label="مراحل تفعيل الخدمة">
+      <div class="steps-list">
+        <button class="step-item active" id="tracker-step-1" onclick="App.goToStep(1)">
+          <div class="step-circle">1</div>
+          <span class="step-label">فحص التوصيل واللمبات</span>
+        </button>
+        <button class="step-item" id="tracker-step-2" onclick="App.goToStep(2)">
+          <div class="step-circle">2</div>
+          <span class="step-label">اختيار موديل الراوتر</span>
+        </button>
+        <button class="step-item" id="tracker-step-3" onclick="App.goToStep(3)">
+          <div class="step-circle">3</div>
+          <span class="step-label">دخول صفحة الراوتر</span>
+        </button>
+        <button class="step-item" id="tracker-step-4" onclick="App.goToStep(4)">
+          <div class="step-circle">4</div>
+          <span class="step-label">التفعيل والمحاكي التفاعلي</span>
+        </button>
+        <button class="step-item" id="tracker-step-5" onclick="App.goToStep(5)">
+          <div class="step-circle">5</div>
+          <span class="step-label">كفاءة الخط ومميزات السوبر</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ==========================================================================
+         STEP 1: PHYSICAL CABLE & LED CHECK
+         ========================================================================== -->
+    <section class="step-view active" id="view-step-1">
+      <div class="card-panel">
+        <div class="section-head">
+          <span class="section-tag">الخطوة الأولى</span>
+          <h3 class="section-title">فحص التوصيل السلكي ولمبات الراوتر</h3>
+          <p class="section-desc">قبل أن تبدأ في الإعدادات، دعنا نتأكد أولاً أن حرارة كابل التليفون واصلة للراوتر بنجاح حتى لا تتعب نفسك دون فائدة!</p>
+        </div>
+
+        <div class="wiring-grid">
+          <!-- 3D Wiring Diagram Image -->
+          <div class="wiring-image-card">
+            <img src="assets/images/orange_splitter.jpg" alt="طريقة توصيل سبليتر وكابلات راوتر أورانج" />
+            <div class="wiring-caption">
+              💡 <strong>التوصيل الصحيح:</strong> كابل التليفون من الحائط يدخل في منفذ <strong>LINE</strong> بالسبليتر، ومنفذ <strong>MODEM</strong> يخرج منه كابل الراوتر، ومنفذ <strong>PHONE</strong> للعدة الأرضية.
+            </div>
+          </div>
+
+          <!-- Interactive LED & Question Tester -->
+          <div class="led-interactive-tester">
+            <div class="tester-title">راقب لمبات راوترك الآن:</div>
+            
+            <div class="led-status-bar">
+              <div class="led-item">
+                <div class="led-bulb green-on"></div>
+                <span class="led-name">Power</span>
+              </div>
+              <div class="led-item">
+                <div class="led-bulb green-on" id="live-dsl-led"></div>
+                <span class="led-name">DSL / Line</span>
+              </div>
+              <div class="led-item">
+                <div class="led-bulb off" id="live-internet-led"></div>
+                <span class="led-name">Internet</span>
+              </div>
+              <div class="led-item">
+                <div class="led-bulb green-on"></div>
+                <span class="led-name">WLAN / Wi-Fi</span>
+              </div>
+            </div>
+
+            <!-- The Big Question -->
+            <div class="dsl-question-box">
+              <h4>ما هي حالة لمبة DSL أو Broadband في راوترك؟</h4>
+              <div class="dsl-options-grid">
+                <button class="dsl-btn active" onclick="App.checkDslStatus('solid')">
+                  <span>🟢</span>
+                  <span>ثابتة تماماً</span>
+                  <small style="color:var(--text-muted);font-size:0.75rem;">(جاهزة للتفعيل)</small>
+                </button>
+                <button class="dsl-btn" onclick="App.checkDslStatus('blinking')">
+                  <span>🟡</span>
+                  <span>تومض / بترعش</span>
+                  <small style="color:var(--text-muted);font-size:0.75rem;">(تأكيد المزامنة)</small>
+                </button>
+                <button class="dsl-btn" onclick="App.checkDslStatus('off')">
+                  <span>🔴</span>
+                  <span>مطفية تماماً</span>
+                  <small style="color:var(--text-muted);font-size:0.75rem;">(لا توجد حرارة)</small>
+                </button>
+              </div>
+
+              <!-- Dynamic Feedback Box -->
+              <div class="dsl-feedback-panel ready visible" id="dsl-feedback">
+                <strong>ممتاز جداً! 🎉</strong> لمبة DSL ثابتة تعني أن الكابل سليم وإشارة السنترال واصلة بكفاءة. أنت جاهز فوراً لتفعيل اشتراك الإنترنت في الخطوة التالية!
+              </div>
+            </div>
+
+            <div style="text-align: left; margin-top: 10px;">
+              <button class="btn-primary" onclick="App.goToStep(2)">
+                التالي: اختر موديل راوترك ←
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         STEP 2: ROUTER MODEL SELECTOR
+         ========================================================================== -->
+    <section class="step-view" id="view-step-2">
+      <div class="card-panel">
+        <div class="section-head">
+          <span class="section-tag">الخطوة الثانية</span>
+          <h3 class="section-title">اختر شكل وموديل راوترك بالصورة</h3>
+          <p class="section-desc">حدد الراوتر الذي تستخدمه حالياً، سواء راوتر أورانج الرسمي أو راوتر قديم محول من شركة سابقة (وي / فودافون / اتصالات):</p>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="router-filter-bar">
+          <button class="filter-chip active" onclick="App.filterRouters('all', this)">كل الموديلات</button>
+          <button class="filter-chip" onclick="App.filterRouters('orange-official', this)">راوترات أورانج الرسمية 🍊</button>
+          <button class="filter-chip" onclick="App.filterRouters('converted', this)">راوترات محولة من شركات أخرى</button>
+        </div>
+
+        <!-- Dynamic Grid populated by JS -->
+        <div class="router-cards-grid" id="routers-grid"></div>
+
+        <div style="display:flex; justify-content:space-between; margin-top: 30px;">
+          <button class="btn-secondary" onclick="App.goToStep(1)">→ السابق</button>
+          <button class="btn-primary" id="btn-to-step-3" onclick="App.goToStep(3)">
+            التالي: فتح صفحة الراوتر وتخطي التحذير ←
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         STEP 3: GATEWAY LAUNCHER & SSL BYPASS GUIDE
+         ========================================================================== -->
+    <section class="step-view" id="view-step-3">
+      <div class="card-panel">
+        <div class="section-head">
+          <span class="section-tag">الخطوة الثالثة</span>
+          <h3 class="section-title">دخول صفحة الراوتر وحل مشكلة تحذير الأمان</h3>
+          <p class="section-desc">الكثير من العملاء يتراجعون هنا لأن المتصفح يظهر لهم شاشة حمراء "Your connection is not private". لا تقلق، هذا طبيعي جداً وسنشرح لك كيف تتخطاه في ثانيتين!</p>
+        </div>
+
+        <div class="gateway-portal-grid">
+          <!-- Gateway Action Launcher -->
+          <div class="gateway-action-card">
+            <div class="gateway-ip-badge" id="display-gateway-ip">192.168.1.1</div>
+            <p style="color:var(--text-muted);font-size:0.95rem;">
+              اضغط على الزر البرتقالي أدناه لفتح صفحة الراوتر في تبويب جديد بجانب هذه الصفحة:
+            </p>
+            <a href="http://192.168.1.1" target="_blank" rel="noopener noreferrer" class="btn-primary" style="font-size:1.15rem;padding:16px 36px;width:100%;justify-content:center;">
+              🌐 فتح صفحة الراوتر (192.168.1.1) الآن
+            </a>
+            
+            <div class="sticker-tip-card">
+              <div class="sticker-icon">🏷️</div>
+              <div class="sticker-text">
+                <h5>بيانات الدخول الافتراضية (من ملصق الظهر):</h5>
+                <p>
+                  اسم المستخدم: <strong style="color:#fff;">admin</strong> (بحروف صغيرة)<br/>
+                  كلمة المرور: <strong style="color:var(--orange-primary);" id="router-sticker-pass">مطبوعة على ملصق ظهر الراوتر</strong> (انتبه للحروف الكبيرة والصغيرة).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- SSL Warning Visual Walkthrough -->
+          <div class="ssl-warning-box">
+            <h4>⚠️ المتصفح أظهر لك: "الاتصال ليس خاصاً / Your connection is not private"؟</h4>
+            <div class="ssl-steps-list">
+              <div class="ssl-step-item">
+                <span class="ssl-badge">1</span>
+                <div>
+                  لا تقلق أبداً! هذا يحدث لأن صفحة الراوتر محلية في بيتك وليس لها شهادة SSL عالمية.
+                </div>
+              </div>
+              <div class="ssl-step-item">
+                <span class="ssl-badge">2</span>
+                <div>
+                  اضغط على زر <strong>(إعدادات متقدمة / Advanced)</strong> في أسفل شاشة التحذير.
+                </div>
+              </div>
+              <div class="ssl-step-item">
+                <span class="ssl-badge">3</span>
+                <div>
+                  اضغط على الرابط الصغير: <strong>(متابعة إلى 192.168.1.1 غير آمن / Proceed to 192.168.1.1 unsafe)</strong>.
+                </div>
+              </div>
+            </div>
+            <div style="background:rgba(0,0,0,0.3);padding:12px;border-radius:var(--radius-sm);font-size:0.85rem;color:#FCA5A5;">
+              ✅ بمجرد الضغط ستفتح لك صفحة الراوتر فوراً لتسجيل الدخول بكلمة <strong>admin</strong>.
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-top: 30px;">
+          <button class="btn-secondary" onclick="App.goToStep(2)">→ السابق</button>
+          <button class="btn-primary" onclick="App.goToStep(4)">
+            التالي: معالج التفعيل والمحاكي التفاعلي ←
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         STEP 4: SETUP WIZARD & INTERACTIVE SIMULATOR
+         ========================================================================== -->
+    <section class="step-view" id="view-step-4">
+      <div class="card-panel">
+        <div class="section-head">
+          <span class="section-tag">الخطوة الرابعة</span>
+          <h3 class="section-title">معالج التفعيل الذكي والمحاكي التفاعلي</h3>
+          <p class="section-desc">اكتب بيانات اشتراك أورانج والواي فاي، واستخدم المحاكي التفاعلي أو كود التفعيل السحري بنقرة واحدة:</p>
+        </div>
+
+        <!-- Input Data Form for SMS & Wi-Fi -->
+        <div class="input-journey-grid">
+          <!-- Orange SMS Credentials -->
+          <div class="form-group-card highlight">
+            <label>📞 رقم التليفون الأرضي / اسم المستخدم (من رسالة أورانج SMS):</label>
+            <div class="input-with-tools">
+              <input type="text" id="input-orange-user" placeholder="مثال: 033014556 أو 02xxxxxxxx" oninput="App.syncConfig()" />
+              <button class="btn-copy" onclick="copyTextToClipboard(document.getElementById('input-orange-user').value.split('@')[0])">نسخ 📋</button>
+            </div>
+            <small style="color:#FF9433;font-size:0.8rem;margin-top:4px;display:block;font-weight:600;">
+              💡 اكتب رقم التليفون الأرضي فقط بكود المحافظة (لا تكتب @Orange أو .eg لأن الراوتر يضيفها تلقائياً).
+            </small>
+
+            <label style="margin-top:16px;">🔑 كلمة مرور الخدمة (من رسالة أورانج):</label>
+            <div class="input-with-tools">
+              <input type="password" id="input-orange-pass" placeholder="كلمة المرور في الرسالة النصية" oninput="App.syncConfig()" />
+              <button class="btn-copy" onclick="copyTextToClipboard(document.getElementById('input-orange-pass').value)">نسخ 📋</button>
+              <button class="btn-secondary" style="padding:6px 10px;" onclick="App.toggleInputPass('input-orange-pass')">👁️</button>
+            </div>
+          </div>
+
+          <!-- Custom Wi-Fi Settings -->
+          <div class="form-group-card">
+            <label>📶 اسم شبكة الواي فاي الجديدة (SSID):</label>
+            <div class="input-with-tools">
+              <input type="text" id="input-wifi-ssid" value="Orange_Home_WiFi" oninput="App.syncConfig()" />
+              <button class="btn-copy" onclick="copyTextToClipboard(document.getElementById('input-wifi-ssid').value)">نسخ 📋</button>
+            </div>
+
+            <label style="margin-top:16px;">🔒 كلمة مرور الواي فاي الجديدة:</label>
+            <div class="input-with-tools">
+              <input type="password" id="input-wifi-pass" value="Orange#2026" oninput="App.syncConfig()" />
+              <button class="btn-copy" onclick="copyTextToClipboard(document.getElementById('input-wifi-pass').value)">نسخ 📋</button>
+              <button class="btn-secondary" style="padding:6px 10px;" onclick="App.toggleInputPass('input-wifi-pass')">👁️</button>
+              <button class="btn-secondary" style="padding:6px 12px;font-size:0.8rem;" onclick="App.generateStrongPass()">توليد باسورد قوي 🎲</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             MOBILE FAST-TRACK SECTION (1-Tap Copy & Router Launch)
+             ================================================================== -->
+        <div class="mobile-fast-track-card">
+          <div class="m-track-header">
+            <div class="m-track-badge">📱 المسار السريع للموبايل والآيفون</div>
+            <h4>التفعيل الفوري بلمسة واحدة من هاتفك</h4>
+            <p>انسخ البيانات بنقرة واحدة، ثم افتح صفحة الراوتر والصقها في خاناتها لتشغيل الخدمة فوراً:</p>
+          </div>
+
+          <div class="m-copy-chips-grid">
+            <div class="m-copy-chip-item">
+              <div class="chip-info">
+                <span class="chip-label">1. رقم التليفون الأرضي الصافي (Username)</span>
+                <strong class="chip-val" id="mobile-copy-user-val">033014556</strong>
+              </div>
+              <button class="btn-primary" onclick="App.copyCleanUser()">نسخ الرقم 📋</button>
+            </div>
+
+            <div class="m-copy-chip-item">
+              <div class="chip-info">
+                <span class="chip-label">2. كلمة مرور أورانج (Password)</span>
+                <strong class="chip-val" id="mobile-copy-pass-val">••••••••</strong>
+              </div>
+              <button class="btn-primary" onclick="App.copyWanPass()">نسخ الباسورد 📋</button>
+            </div>
+          </div>
+
+          <div class="m-open-router-box">
+            <a href="https://192.168.1.1" target="_blank" rel="noopener noreferrer" class="btn-launch-router">
+              🚀 اضغط هنا لفتح صفحة الراوتر (192.168.1.1) في تبويب جديد
+            </a>
+            <div class="m-router-quick-guide">
+              <div class="g-step"><span>1</span> اكتب <code>user</code> (أو admin) وباسورد ظهر الراوتر لتسجيل الدخول.</div>
+              <div class="g-step"><span>2</span> ادخل على <strong>Internet</strong> ثم <strong>DSL Connection</strong> (أو WAN).</div>
+              <div class="g-step"><span>3</span> الصق رقم تليفونك والباسورد واضغط <strong>Apply</strong>! وستعمل لمبة النت فوراً 🎉</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Setup Mode Switcher (Auto Assistant vs Simulator vs Console Script) -->
+        <div class="setup-mode-tabs">
+          <button class="mode-tab-btn active" id="mode-tab-auto" onclick="App.switchSetupMode('auto')">
+            <span>✨</span> التفعيل التلقائي (إضافة الكمبيوتر والإشارة المرجعية)
+          </button>
+          <button class="mode-tab-btn" id="mode-tab-sim" onclick="App.switchSetupMode('sim')">
+            <span>🖥️</span> المحاكي التفاعلي شاشة بشاشة
+          </button>
+          <button class="mode-tab-btn" id="mode-tab-code" onclick="App.switchSetupMode('code')">
+            <span>⚡</span> كود التفعيل المباشر
+          </button>
+        </div>
+
+        <!-- Mode 1: Auto Assistant (Magic Bookmarklet Hero & Extension) -->
+        <div id="auto-mode-container">
+          <!-- HERO: Magic Bookmarklet for Mobile & Desktop -->
+          <div class="bkmk-hero-wrapper">
+            <div class="bkmk-header-row">
+              <div class="bkmk-title-wrap">
+                <span class="tool-badge" style="background:rgba(0,210,106,0.15);color:#00D26A;margin-bottom:6px;">🌟 الحل الأسرع والأذكى للموبايل والكمبيوتر</span>
+                <h4>⚡ أداة التفعيل السريعة بلمسة واحدة (Magic Bookmarklet)</h4>
+                <p>
+                  بدون تحميل أي برامج أو تطبيقات خارجية! مبرمجة ومجهزة مسبقاً ببيانات خطك لبرمجة الراوتر وحفظ الإعدادات تلقائياً.
+                </p>
+              </div>
+            </div>
+
+            <!-- Credentials Baked Inside Bookmarklet -->
+            <div class="bkmk-cred-strip">
+              <div class="bkmk-cred-pill">
+                <span class="lbl">📞 رقم التليفون الأرضي:</span>
+                <span class="val" id="bkmk-cred-user">033014556</span>
+              </div>
+              <div class="bkmk-cred-pill">
+                <span class="lbl">🔑 كلمة المرور:</span>
+                <span class="val" id="bkmk-cred-pass">••••••••</span>
+              </div>
+              <div class="bkmk-cred-pill" style="margin-right:auto;">
+                <span style="color:#00D26A;font-weight:700;">✔️ مبرمج بدون لواحق (@) ليطابق راوترك</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons Grid -->
+            <div class="bkmk-actions-cluster">
+              <button class="btn-bkmk-copy" id="btn-copy-bkmk" onclick="App.copyBookmarkletCode(this)">
+                <span>📋</span> نسخ كود التفعيل السريع (Bookmarklet)
+              </button>
+              <a id="bookmarklet-link" href="#" class="btn-bkmk-drag" title="اسحبني لشريط الإشارات في متصفحك">
+                <span>⭐</span> اسحبني لشريط الإشارات (تفعيل أورانج)
+              </a>
+              <button class="btn-bkmk-test" onclick="App.testBookmarkletOnSimulator()">
+                <span>🧪</span> تجربة البوكماركليت الآن داخل المحاكي
+              </button>
+              <a href="http://192.168.1.1" target="_blank" rel="noopener noreferrer" class="btn-bkmk-drag" style="border-style:solid;background:rgba(255,255,255,0.06);color:#fff;">
+                <span>🚀</span> فتح صفحة الراوتر (192.168.1.1)
+              </a>
+            </div>
+
+            <!-- Interactive Device Guide -->
+            <div class="bkmk-guide-container">
+              <div class="bkmk-guide-title">
+                <span>📱</span> اختر نوع جهازك لمعرفة طريقة الاستخدام في 30 ثانية:
+              </div>
+
+              <!-- Device Tabs -->
+              <div class="bkmk-device-tabs">
+                <button class="bkmk-device-tab-btn active" data-device="ios" onclick="App.switchDeviceGuide('ios')">
+                  🍎 آيفون (Safari iOS)
+                </button>
+                <button class="bkmk-device-tab-btn" data-device="android" onclick="App.switchDeviceGuide('android')">
+                  🤖 أندرويد (Chrome Android)
+                </button>
+                <button class="bkmk-device-tab-btn" data-device="pc" onclick="App.switchDeviceGuide('pc')">
+                  💻 كمبيوتر / لابتوب الفرع
+                </button>
+              </div>
+
+              <!-- Panel 1: iPhone Safari -->
+              <div class="bkmk-guide-panel active" id="guide-panel-ios">
+                <div class="bkmk-steps-list">
+                  <div class="bkmk-step-item">
+                    <span class="num">1</span>
+                    <div>اضغط على زر <strong>نسخ كود التفعيل السريع 📋</strong> البرتقالي بالأعلى.</div>
+                  </div>
+                  <div class="bkmk-step-item">
+                    <span class="num">2</span>
+                    <div>اضغط زر <strong>المشاركة (Share) ⬆️</strong> أسفل متصفح Safari، ثم اختر <strong>"إضافة إشارة مرجعية" (Add Bookmark)</strong>، وسمّها <code>تفعيل أورانج</code> ثم اضغط حفظ.</div>
+                  </div>
+                  <div class="bkmk-step-item">
+                    <span class="num">3</span>
+                    <div>افتح الإشارات المرجعية (أيقونة الكتاب 📖) واضغط <strong>"تعديل" (Edit)</strong>، اضغط على <code>تفعيل أورانج</code>، <strong>امسح الرابط القديم بالكامل</strong> والصق الكود المنسوخ بدلاً منه واضغط تم.</div>
+                  </div>
+                  <div class="bkmk-step-item">
+                    <span class="num">4</span>
+                    <div>افتح صفحة الراوتر <code>192.168.1.1</code>، اضغط على <strong>شريط العنوان</strong> واكتب كلمة <code>تفعيل</code> واضغط على الإشارة المرجعية... ومبروك! سيقوم بملء البيانات والضغط على Apply فوراً! 🎉</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel 2: Android Chrome -->
+              <div class="bkmk-guide-panel" id="guide-panel-android">
+                <div class="bkmk-steps-list">
+                  <div class="bkmk-step-item">
+                    <span class="num">1</span>
+                    <div>اضغط على زر <strong>نسخ كود التفعيل السريع 📋</strong> البرتقالي بالأعلى.</div>
+                  </div>
+                  <div class="bkmk-step-item">
+                    <span class="num">2</span>
+                    <div>اضغط على <strong>علامة النجمة ⭐</strong> بأعلى الشاشة لحفظ الصفحة بالمفضلة، ثم اضغط كلمة <strong>تعديل (Edit)</strong> في الشريط الأسفل.</div>
+                  </div>
+                  <div class="bkmk-step-item">
+                    <span class="num">3</span>
+                    <div>امسح خانة الرابط URL والصق الكود المنسوخ بدلاً منه واجعل الاسم <code>تفعيل أورانج</code> ثم اضغط حفظ.</div>
+                  </div>
+                  <div class="bkmk-step-item">
+                    <span class="num">4</span>
+                    <div>افتح صفحة الراوتر <code>192.168.1.1</code>، اضغط على شريط العنوان واكتب كلمة <code>تفعيل</code>، واختر النتيجة التي بجانبها نجمة ⭐... وستتم البرمجة وحفظ الإعدادات تلقائياً!</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel 3: Desktop PC -->
+              <div class="bkmk-guide-panel" id="guide-panel-pc">
+                <div class="bkmk-steps-list">
+                  <div class="bkmk-step-item">
+                    <span class="num">1</span>
+                    <div>تأكد من إظهار شريط الإشارات في متصفحك (اضغط <code>Ctrl + Shift + B</code> على لوحة المفاتيح).</div>
+                  </div>
+                  <div class="bkmk-step-item">
+                    <span class="num">2</span>
+                    <div><strong>اسحب الزر "⭐ اسحبني لشريط الإشارات"</strong> بالماوس وأفلته داخل شريط الإشارات بأعلى المتصفح.</div>
+                  </div>
+                  <div class="bkmk-step-item">
+                    <span class="num">3</span>
+                    <div>افتح صفحة الراوتر <code>192.168.1.1</code> واضغط على زر الإشارة المرجعية بضغطة واحدة... وستتم البرمجة والتفعيل في ثانية!</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Secondary Alternative: Chrome/Edge Extension for PC -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+            <div style="max-width:580px;">
+              <span class="tool-badge" style="margin-bottom:4px;">خيار إضافي لأجهزة الكمبيوتر ولابتوب الفرع</span>
+              <h5 style="font-size:1rem;font-weight:800;color:#fff;margin:4px 0;">إضافة متصفح أورانج الذكية (Chrome & Edge Extension)</h5>
+              <p style="font-size:0.84rem;color:var(--text-muted);margin:0;line-height:1.5;">
+                تثبت على لابتوب العميل أو كمبيوتر الفرع وتفتح نافذة المساعد العائم تلقائياً فوق صفحة 192.168.1.1 بدون أي تدخل يدوي.
+              </p>
+            </div>
+            <div>
+              <a href="orange-assistant-extension.zip" download="orange-assistant-extension.zip" class="btn-primary" style="font-size:0.88rem;padding:10px 18px;">
+                📥 تحميل الإضافة (ZIP)
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mode 2: Virtual Interactive Simulator View -->
+        <div id="sim-mode-container" style="display:none;">
+          <div id="simulator-viewport"></div>
+        </div>
+
+        <!-- Mode 3: 1-Click Browser Console Script Snippet -->
+        <div id="code-mode-container" style="display:none;">
+          <div class="code-script-card">
+            <div class="code-header">
+              <h4>كود التفعيل الذكي الفوري من أورنج (SmartConnect Direct Script):</h4>
+              <button class="btn-primary" onclick="App.copyAutoFillScript()">
+                📋 نسخ كود التفعيل بالكامل
+              </button>
+            </div>
+            <div class="code-snippet-box" id="code-display"></div>
+            <div style="margin-top:12px;font-size:0.85rem;color:var(--text-muted);line-height:1.6;">
+              💡 <strong>طريقة الاستخدام:</strong> افتح صفحة الراوتر (192.168.1.1)، اضغط <strong>F12</strong> على الكيبورد لفتح نافذة الـ Console، الصق هذا الكود واضغط <strong>Enter</strong>. سيقوم الكود بملء كل الخانات في ثانية واحدة!
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-top: 30px;">
+          <button class="btn-secondary" onclick="App.goToStep(3)">→ السابق</button>
+          <button class="btn-primary" onclick="App.goToStep(5)">
+            التالي: مبروك وفحص كفاءة الخط ←
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         STEP 5: LINE HEALTH CALCULATOR, QR CARD & SUPER TOOLS
+         ========================================================================== -->
+    <section class="step-view" id="view-step-5">
+      <div class="card-panel">
+        <div class="section-head" style="text-align:center;">
+          <div style="font-size:3.5rem;margin-bottom:10px;">🎉 🚀</div>
+          <h3 class="section-title">مبروك! راوترك اتبرمج والخدمة جاهزة للعمل</h3>
+          <p class="section-desc">لمبة الإنترنت ستتحول للأخضر الآن. إليك أهم الأدوات الحصرية من فرع أورانج للحفاظ على باقتك ومعرفة أقصى سرعة لخطك:</p>
+        </div>
+
+        <div class="tools-grid">
+          <!-- Tool 1: VDSL Line Quality & Max Speed Calculator -->
+          <div class="tool-card">
+            <span class="tool-badge">أداة حصرية للمشتركين</span>
+            <h4 class="tool-title">حاسبة كفاءة وجودة خط التليفون (Line Health)</h4>
+            <p style="font-size:0.85rem;color:var(--text-muted);">
+              اكتب قراءات الخط من صفحة الراوتر (Status -> DSL Info) لتعرف مسافة الكابينة وأقصى سرعة يتحملها سلكك:
+            </p>
+
+            <div class="diagnostic-inputs">
+              <div class="diag-field">
+                <label>التشويش (SNR Margin) بالـ dB:</label>
+                <input type="number" id="diag-snr" value="16.5" step="0.5" oninput="App.calculateLine()" />
+              </div>
+              <div class="diag-field">
+                <label>الوهن (Attenuation) بالـ dB:</label>
+                <input type="number" id="diag-att" value="12.0" step="0.5" oninput="App.calculateLine()" />
+              </div>
+            </div>
+
+            <!-- Dynamic Diagnostic Result -->
+            <div class="diag-result-card" id="diag-result-box">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:700;">تقييم كفاءة الخط:</span>
+                <strong style="color:#00D26A;" id="diag-score-text">92% (ممتاز جداً)</strong>
+              </div>
+              <div class="diag-score-bar">
+                <div class="diag-score-fill" id="diag-score-fill" style="width:92%;"></div>
+              </div>
+              <div style="font-size:0.88rem;color:#E2E8F0;margin-top:6px;" id="diag-summary-text">
+                📍 بعد الكابينة التقريبي: <strong>حوالي 870 متر</strong><br/>
+                🚀 أقصى سرعة يتحملها خطك بدون تقطيع: <strong>85 ميجابايت/ثانية</strong><br/>
+                📦 الباقة الموصى بها في أورانج: <strong>باقة VDSL 70 إلى 100 ميجا</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tool 2: Printable Wi-Fi QR Card Generator -->
+          <div class="tool-card">
+            <span class="tool-badge">شياكة لبيتك ولضيوفك</span>
+            <h4 class="tool-title">كارت كود الـ QR لشبكة الواي فاي</h4>
+            <p style="font-size:0.85rem;color:var(--text-muted);">
+              اطبع هذا الكارت أو احفظه على موبايلك، أي ضيف يمسحه بكاميرا الموبايل يتصل بالواي فاي فوراً بدون كتابة الباسورد:
+            </p>
+
+            <div class="wifi-qr-card-view">
+              <div class="orange-square-logo" style="width:36px;height:36px;margin:0 auto 8px;">
+                <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#FF7900"/><path d="M12 4C7.58 4 4 7.58 4 12s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z" fill="#FFFFFF"/></svg>
+              </div>
+              <div class="qr-network-name" id="qr-display-ssid">Orange_Home_WiFi</div>
+              <div class="qr-canvas-holder" id="qr-code-holder"></div>
+              <div class="qr-password-text" id="qr-display-pass">كلمة السر: Orange#2026</div>
+              <button class="btn-primary" style="margin-top:14px;padding:8px 20px;font-size:0.85rem;" onclick="window.print()">
+                🖨️ طباعة كارت الواي فاي
+              </button>
+            </div>
+          </div>
+
+          <!-- Tool 3: Clean Family DNS (Porn & Threat Blocker) -->
+          <div class="tool-card">
+            <span class="tool-badge">أمان وحماية عائلية</span>
+            <h4 class="tool-title">حماية الأسرة والأطفال (Clean Family DNS)</h4>
+            <p style="font-size:0.85rem;color:var(--text-muted);">
+              احمِ أولادك وبيتك من المواقع الإباحية والروابط الخبيثة عبر تغيير الـ DNS في الراوتر بضغطة زر:
+            </p>
+            <div style="background:rgba(255,121,0,0.06);padding:14px;border-radius:var(--radius-sm);border:1px solid rgba(255,121,0,0.2);">
+              <strong>سيرفرات الحماية المقترحة (Cloudflare Family 1.1.1.3):</strong><br/>
+              الأساسي: <code style="color:var(--orange-primary);">1.1.1.3</code> | الثانوي: <code style="color:var(--orange-primary);">1.0.0.3</code>
+            </div>
+            <button class="btn-secondary" onclick="App.copyDnsScript()">
+              📋 نسخ كود تطبيق الـ DNS النظيف في الراوتر
+            </button>
+          </div>
+
+          <!-- Tool 4: Bandwidth Speed Limiter -->
+          <div class="tool-card">
+            <span class="tool-badge">ترشيد استهلاك الباقة</span>
+            <h4 class="tool-title">تحديد سرعة الواي فاي وحماية الباقة</h4>
+            <p style="font-size:0.85rem;color:var(--text-muted);">
+              هل باقتك تنتهي في منتصف الشهر بسبب فيديوهات يوتيوب وتيك توك عالية الجودة؟ حدد تردد القناة وخفض المدى لتوفير الباقة:
+            </p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+              <button class="filter-chip" onclick="App.copySpeedGuide('5Mbps')">توفير فائق (5 ميجا)</button>
+              <button class="filter-chip active" onclick="App.copySpeedGuide('10Mbps')">متوازن للأسرة (10 ميجا)</button>
+              <button class="filter-chip" onclick="App.copySpeedGuide('15Mbps')">مثالي لـ 5 أجهزة (15 ميجا)</button>
+            </div>
+            <button class="btn-secondary" onclick="App.applyEcoMode()">
+              ⚡ نسخ كود وضع التوفير فائق الاستقرار (20MHz)
+            </button>
+          </div>
+
+          <!-- Tool 5: Connected Devices & Intruder Sniffer -->
+          <div class="tool-card" style="grid-column: 1 / -1;">
+            <span class="tool-badge" style="background:rgba(239,68,68,0.2);color:#F87171;border-color:rgba(239,68,68,0.4);">
+              🛡️ كاشف الأجهزة والمخترقين (29,228 شركة مصنعة)
+            </span>
+            <h4 class="tool-title">كشف نوع الأجهزة المتصلة بالواي فاي وطرد المتطفلين</h4>
+            <p style="font-size:0.85rem;color:var(--text-muted);">
+              شاكك إن حد سارق الواي فاي؟ اكتب أو الصق عنوان الماك (MAC Address) من صفحة الراوتر (أو اختر من الأمثلة أدناه) لمعرفة نوع الجهاز واسم الشركة المصنعة وحظره فوراً:
+            </p>
+
+            <div class="mac-search-bar">
+              <input type="text" id="mac-input" placeholder="مثال: 58:85:E9:12:34:56 أو 10:29:59" />
+              <button class="btn-primary" onclick="App.searchMacVendor()">
+                🔍 فحص الجهاز
+              </button>
+            </div>
+
+            <!-- Quick MAC Presets -->
+            <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+              <span style="font-size:0.8rem; color:var(--text-muted);">تجربة سريعة:</span>
+              <button class="filter-chip" onclick="App.setMacPreset('10:29:59:AA:BB:CC')">📱 آبل آيفون</button>
+              <button class="filter-chip" onclick="App.setMacPreset('D8:97:90:11:22:33')">📱 سامسونج جالكسي</button>
+              <button class="filter-chip" onclick="App.setMacPreset('BC:23:92:44:55:66')">📱 شاومي / ردمي</button>
+              <button class="filter-chip" onclick="App.setMacPreset('58:85:E9:77:88:99')">📱 أوبو / ريلمي</button>
+              <button class="filter-chip" onclick="App.setMacPreset('00:D0:EF:01:02:03')">🎮 جهاز ألعاب</button>
+            </div>
+
+            <!-- Dynamic Result Card -->
+            <div class="mac-result-card" id="mac-result-box"></div>
+          </div>
+
+          <!-- Tool 6: 1-Click Safe Router Reboot -->
+          <div class="tool-card">
+            <span class="tool-badge">صيانة وتنشيط السرعة</span>
+            <h4 class="tool-title">إعادة تشغيل الراوتر وتحديث الـ IP بزر واحد</h4>
+            <p style="font-size:0.85rem;color:var(--text-muted);">
+              النت بطيء أو البنج عالي؟ بدل ما تشد فيشة الكهرباء وتبوظ سوفتوير الراوتر، انسخ كود إعادة التشغيل الذكي ليقوم الراوتر بعمل Restart وسحب IP جديد فائق السرعة:
+            </p>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <button class="btn-secondary" onclick="App.rebootCurrentRouter('orange-h188a')">
+                🔄 كود ريستارت راوتر ZTE H188A / H168N
+              </button>
+              <button class="btn-secondary" onclick="App.rebootCurrentRouter('orange-dg8045')">
+                🔄 كود ريستارت راوتر Huawei DG8045
+              </button>
+            </div>
+          </div>
+
+          <!-- Tool 7: Live Gaming & Orange Ping Monitor -->
+          <div class="tool-card">
+            <span class="tool-badge" style="background:rgba(0,210,106,0.15);color:#00D26A;border-color:rgba(0,210,106,0.3);">
+              🎮 فاحص بنج الألعاب والستريمنج
+            </span>
+            <h4 class="tool-title">قياس سرعة الاستجابة لخوادم أورنج والألعاب</h4>
+            <p style="font-size:0.85rem;color:var(--text-muted);">
+              افحص زمن الوصول (Latency / Ping) لسيرفرات الألعاب (ببجي / فالورانت / فيفا) ومحركات الـ DNS للتأكد من استقرار خطك:
+            </p>
+            <button class="btn-primary" id="ping-test-btn" style="width:100%;margin-top:6px;" onclick="App.runGamingPingTest()">
+              ⚡ بدء قياس البنج المباشر
+            </button>
+            <div class="ping-meter-grid" id="ping-results-grid"></div>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin-top: 40px;">
+          <button class="btn-primary" style="font-size:1.1rem;padding:14px 40px;" onclick="App.goToStep(1)">
+            🔄 إعادة تهيئة أو تفعيل راوتر جديد
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       SITE FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-credit">
+        <span>🍊 Orange SmartConnect | البوابة الموحدة للدعم الفني والتفعيل الذاتي لعملاء أورانج مصر</span>
+      </div>
+      <p style="font-size:0.85rem;color:var(--text-subtle);">
+        Orange SmartConnect Platform &copy; 2026. Official Digital Self-Care System. All router models & trademarks are property of their respective manufacturers.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Sticky Navigation Bar -->
+  <nav class="mobile-bottom-nav" aria-label="شريط التنقل السريع للهواتف">
+    <button class="mobile-nav-item active" onclick="App.goToStep(1)">
+      <span class="mobile-nav-icon">🔌</span>
+      <span>التوصيل</span>
+    </button>
+    <button class="mobile-nav-item" onclick="App.goToStep(2)">
+      <span class="mobile-nav-icon">📟</span>
+      <span>الراوتر</span>
+    </button>
+    <button class="mobile-nav-item" onclick="App.goToStep(3)">
+      <span class="mobile-nav-icon">🔐</span>
+      <span>الدخول</span>
+    </button>
+    <button class="mobile-nav-item" onclick="App.goToStep(4)">
+      <span class="mobile-nav-icon">🚀</span>
+      <span>التفعيل</span>
+    </button>
+    <button class="mobile-nav-item" onclick="App.goToStep(5)">
+      <span class="mobile-nav-icon">⚡</span>
+      <span>الأدوات</span>
+    </button>
+  </nav>
+
+  <!-- Mobile QR Code Modal -->
+  <div class="modal-overlay" id="mobile-qr-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="App.closeMobileModal()">&times;</button>
+      <div class="orange-square-logo" style="width:40px;height:40px;margin:0 auto 12px;">
+        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#FF7900"/><path d="M12 4C7.58 4 4 7.58 4 12s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z" fill="#FFFFFF"/></svg>
+      </div>
+      <h3 style="font-size:1.25rem; font-weight:800; color:#fff; margin-bottom:6px;">
+        📱 تجربة أورانج سمارت على هاتفك فوراً
+      </h3>
+      <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+        تأكد أن هاتفك متصل بنفس شبكة الواي فاي للراوتر، ثم افتح كاميرا موبايلك ووجّهها نحو الباركود لفتح التطبيق:
+      </p>
+
+      <div class="mobile-qr-wrapper" id="mobile-qr-holder"></div>
+
+      <div style="margin-top:10px;">
+        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">رابط الشبكة المحلية المباشر:</div>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="mobile-url-display" readonly style="flex:1; background:rgba(0,0,0,0.5); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); color:#fff; font-size:0.85rem; padding:8px 12px; text-align:center; direction:ltr;" />
+          <button class="btn-primary" style="padding:8px 14px; font-size:0.85rem;" onclick="App.copyMobileUrl()">نسخ الرابط</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Element -->
+  <div class="app-toast" id="app-toast"></div>
+
+  <!-- Scripts -->
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/router-data.js"></script>
+  <script src="js/script-generator.js"></script>
+  <script src="js/line-calculator.js"></script>
+  <script src="js/simulator.js"></script>
+  <script src="js/tools-suite.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

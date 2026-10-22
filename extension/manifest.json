@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Orange SmartConnect - مساعد التفعيل التلقائي للراوتر",
+  "version": "1.0.0",
+  "description": "بوابة التفعيل التلقائي الفوري لراوترات أورانج مصر للإنترنت المنزلي DSL / VDSL",
+  "icons": {
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "host_permissions": [
+    "http://192.168.1.1/*",
+    "http://192.168.0.1/*",
+    "http://192.168.1.254/*",
+    "https://192.168.1.1/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://192.168.1.1/*",
+        "http://192.168.0.1/*",
+        "http://192.168.1.254/*",
+        "https://192.168.1.1/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

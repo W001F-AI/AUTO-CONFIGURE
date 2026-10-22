@@ -1,0 +1,33 @@
+{
+  "name": "Orange SmartConnect - أورنج مصر",
+  "short_name": "Orange Smart",
+  "description": "بوابة التفعيل الذكي لراوترات أورنج مصر للإنترنت المنزلي DSL / VDSL",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0A0D14",
+  "theme_color": "#FF7900",
+  "dir": "rtl",
+  "lang": "ar",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

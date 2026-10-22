@@ -1,0 +1,20 @@
+{
+  "name": "orange-smart-connect",
+  "version": "1.0.0",
+  "description": "Orange Egypt Smart Home Internet Self-Setup & Diagnostic Platform",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "orange",
+    "router",
+    "setup",
+    "dsl",
+    "vdsl",
+    "egypt",
+    "self-service"
+  ],
+  "author": "Orange Egypt",
+  "license": "MIT"
+}
