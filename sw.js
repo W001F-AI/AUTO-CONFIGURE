@@ -1,5 +1,5 @@
-// Orange SmartConnect - Official Service Worker v4
-const CACHE_NAME = 'orange-smartconnect-v4';
+// Orange SmartConnect - Official Service Worker v5
+const CACHE_NAME = 'orange-smartconnect-v5';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

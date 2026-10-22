@@ -213,7 +213,7 @@
               </div>
             </div>
 
-            <div style="text-align: left; margin-top: 10px;">
+            <div class="step-nav-buttons single-btn" style="margin-top:14px;">
               <button class="btn-primary" onclick="App.goToStep(2)">
                 التالي: اختر موديل راوترك ←
               </button>
@@ -244,7 +244,7 @@
         <!-- Dynamic Grid populated by JS -->
         <div class="router-cards-grid" id="routers-grid"></div>
 
-        <div style="display:flex; justify-content:space-between; margin-top: 30px;">
+        <div class="step-nav-buttons">
           <button class="btn-secondary" onclick="App.goToStep(1)">→ السابق</button>
           <button class="btn-primary" id="btn-to-step-3" onclick="App.goToStep(3)">
             التالي: فتح صفحة الراوتر وتخطي التحذير ←
@@ -316,7 +316,7 @@
           </div>
         </div>
 
-        <div style="display:flex; justify-content:space-between; margin-top: 30px;">
+        <div class="step-nav-buttons">
           <button class="btn-secondary" onclick="App.goToStep(2)">→ السابق</button>
           <button class="btn-primary" onclick="App.goToStep(4)">
             التالي: معالج التفعيل والمحاكي التفاعلي ←
@@ -340,37 +340,121 @@
         <div class="input-journey-grid">
           <!-- Orange SMS Credentials -->
           <div class="form-group-card highlight">
-            <label>📞 رقم التليفون الأرضي / اسم المستخدم (من رسالة أورانج SMS):</label>
-            <div class="input-with-tools">
-              <input type="text" id="input-orange-user" placeholder="مثال: 02xxxxxxxx أو 03xxxxxxx" oninput="App.syncConfig()" />
-              <button class="btn-copy" onclick="copyTextToClipboard(document.getElementById('input-orange-user').value.split('@')[0])">نسخ 📋</button>
+            <div class="card-mini-head">
+              <span class="card-mini-badge">بيانات الخدمة</span>
+              <h4>📋 بيانات اشتراك أورانج (من رسالة SMS)</h4>
             </div>
-            <small style="color:#FF9433;font-size:0.8rem;margin-top:4px;display:block;font-weight:600;">
-              💡 اكتب رقم التليفون الأرضي فقط بكود المحافظة (لا تكتب @Orange أو .eg لأن الراوتر يضيفها تلقائياً).
-            </small>
 
-            <label style="margin-top:16px;">🔑 كلمة مرور الخدمة (من رسالة أورانج):</label>
-            <div class="input-with-tools">
-              <input type="password" id="input-orange-pass" placeholder="كلمة المرور في الرسالة النصية" oninput="App.syncConfig()" />
-              <button class="btn-copy" onclick="copyTextToClipboard(document.getElementById('input-orange-pass').value)">نسخ 📋</button>
-              <button class="btn-secondary" style="padding:6px 10px;" onclick="App.toggleInputPass('input-orange-pass')">👁️</button>
+            <!-- Landline Number Field -->
+            <div class="form-field-group">
+              <label for="input-orange-user">
+                <span class="lbl-icon">📞</span>
+                <span>رقم التليفون الأرضي / اسم المستخدم:</span>
+              </label>
+              <div class="field-input-box">
+                <input 
+                  type="text" 
+                  id="input-orange-user" 
+                  class="field-input" 
+                  placeholder="مثال: 02xxxxxxxx أو 03xxxxxxx" 
+                  autocomplete="off" 
+                  oninput="App.syncConfig()" 
+                />
+              </div>
+              <div class="field-actions-bar">
+                <button type="button" class="btn-field-action" onclick="App.copyCleanUser()">
+                  <span>📋</span> نسخ الرقم الصافي
+                </button>
+              </div>
+              <p class="field-hint">
+                💡 اكتب رقم التليفون الأرضي فقط بكود المحافظة (الراوتر يضيف @Orange تلقائياً).
+              </p>
+            </div>
+
+            <!-- Service Password Field -->
+            <div class="form-field-group" style="margin-top:16px;">
+              <label for="input-orange-pass">
+                <span class="lbl-icon">🔑</span>
+                <span>كلمة مرور الخدمة (من رسالة أورانج النصية):</span>
+              </label>
+              <div class="field-input-box has-eye">
+                <input 
+                  type="password" 
+                  id="input-orange-pass" 
+                  class="field-input" 
+                  placeholder="كلمة المرور في الرسالة النصية" 
+                  autocomplete="new-password" 
+                  oninput="App.syncConfig()" 
+                />
+                <button type="button" class="btn-field-eye" onclick="App.toggleInputPass('input-orange-pass')" aria-label="إظهار / إخفاء كلمة المرور">
+                  👁️
+                </button>
+              </div>
+              <div class="field-actions-bar">
+                <button type="button" class="btn-field-action" onclick="App.copyWanPass()">
+                  <span>📋</span> نسخ كلمة المرور
+                </button>
+              </div>
             </div>
           </div>
 
           <!-- Custom Wi-Fi Settings -->
           <div class="form-group-card">
-            <label>📶 اسم شبكة الواي فاي الجديدة (SSID):</label>
-            <div class="input-with-tools">
-              <input type="text" id="input-wifi-ssid" value="Orange_Home_WiFi" oninput="App.syncConfig()" />
-              <button class="btn-copy" onclick="copyTextToClipboard(document.getElementById('input-wifi-ssid').value)">نسخ 📋</button>
+            <div class="card-mini-head">
+              <span class="card-mini-badge">الشبكة اللاسلكية</span>
+              <h4>📶 إعدادات الواي فاي (Wi-Fi) المخصصة</h4>
             </div>
 
-            <label style="margin-top:16px;">🔒 كلمة مرور الواي فاي الجديدة:</label>
-            <div class="input-with-tools">
-              <input type="password" id="input-wifi-pass" value="Orange#2026" oninput="App.syncConfig()" />
-              <button class="btn-copy" onclick="copyTextToClipboard(document.getElementById('input-wifi-pass').value)">نسخ 📋</button>
-              <button class="btn-secondary" style="padding:6px 10px;" onclick="App.toggleInputPass('input-wifi-pass')">👁️</button>
-              <button class="btn-secondary" style="padding:6px 12px;font-size:0.8rem;" onclick="App.generateStrongPass()">توليد باسورد قوي 🎲</button>
+            <!-- Wi-Fi SSID Field -->
+            <div class="form-field-group">
+              <label for="input-wifi-ssid">
+                <span class="lbl-icon">📶</span>
+                <span>اسم شبكة الواي فاي الجديدة (SSID):</span>
+              </label>
+              <div class="field-input-box">
+                <input 
+                  type="text" 
+                  id="input-wifi-ssid" 
+                  class="field-input" 
+                  value="Orange_Home_WiFi" 
+                  autocomplete="off" 
+                  oninput="App.syncConfig()" 
+                />
+              </div>
+              <div class="field-actions-bar">
+                <button type="button" class="btn-field-action" onclick="copyTextToClipboard(document.getElementById('input-wifi-ssid').value)">
+                  <span>📋</span> نسخ اسم الشبكة
+                </button>
+              </div>
+            </div>
+
+            <!-- Wi-Fi Password Field -->
+            <div class="form-field-group" style="margin-top:16px;">
+              <label for="input-wifi-pass">
+                <span class="lbl-icon">🔒</span>
+                <span>كلمة مرور الواي فاي الجديدة:</span>
+              </label>
+              <div class="field-input-box has-eye">
+                <input 
+                  type="password" 
+                  id="input-wifi-pass" 
+                  class="field-input" 
+                  value="Orange#2026" 
+                  autocomplete="new-password" 
+                  oninput="App.syncConfig()" 
+                />
+                <button type="button" class="btn-field-eye" onclick="App.toggleInputPass('input-wifi-pass')" aria-label="إظهار / إخفاء كلمة المرور">
+                  👁️
+                </button>
+              </div>
+              <div class="field-actions-bar two-cols">
+                <button type="button" class="btn-field-action" onclick="copyTextToClipboard(document.getElementById('input-wifi-pass').value)">
+                  <span>📋</span> نسخ الباسورد
+                </button>
+                <button type="button" class="btn-field-action btn-action-accent" onclick="App.generateStrongPass()">
+                  <span>🎲</span> توليد باسورد قوي
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -594,7 +678,7 @@
           </div>
         </div>
 
-        <div style="display:flex; justify-content:space-between; margin-top: 30px;">
+        <div class="step-nav-buttons">
           <button class="btn-secondary" onclick="App.goToStep(3)">→ السابق</button>
           <button class="btn-primary" onclick="App.goToStep(5)">
             التالي: مبروك وفحص كفاءة الخط ←

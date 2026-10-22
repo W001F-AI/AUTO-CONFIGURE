@@ -551,6 +551,7 @@
   color: #fff;
 }
 
+/* Legacy input-with-tools fallback */
 .input-with-tools {
   display: flex;
   gap: 8px;
@@ -573,6 +574,189 @@
   outline: none;
   border-color: var(--orange-primary);
   box-shadow: 0 0 12px var(--orange-glow);
+}
+
+/* ==========================================================================
+   ENHANCED FORM FIELD BLOCKS & INPUT TOOLS (Mobile-First Ergonomics)
+   ========================================================================== */
+.card-mini-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.card-mini-head h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.card-mini-badge {
+  background: rgba(255, 121, 0, 0.15);
+  color: var(--orange-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.form-field-group {
+  margin-bottom: 18px;
+}
+
+.form-field-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-field-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #F1F5F9;
+}
+
+.form-field-group label .lbl-icon {
+  font-size: 1.1rem;
+}
+
+.field-input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.field-input-box input.field-input {
+  width: 100%;
+  height: 48px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.field-input-box input.field-input:focus {
+  outline: none;
+  border-color: var(--orange-primary);
+  box-shadow: 0 0 14px var(--orange-glow);
+  background: rgba(0, 0, 0, 0.65);
+}
+
+/* Eye toggle inside password field */
+.field-input-box.has-eye input.field-input {
+  padding-left: 48px; /* space for eye toggle on the left in RTL */
+}
+
+.field-input-box .btn-field-eye {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.field-input-box .btn-field-eye:hover,
+.field-input-box .btn-field-eye:active {
+  color: var(--orange-primary);
+  background: rgba(255, 121, 0, 0.15);
+}
+
+.field-actions-bar {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.field-actions-bar.two-cols {
+  grid-template-columns: 1fr 1fr;
+}
+
+.btn-field-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #fff;
+  min-height: 42px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-field-action:hover,
+.btn-field-action:active {
+  background: rgba(255, 121, 0, 0.15);
+  border-color: var(--orange-primary);
+  color: var(--orange-primary);
+  transform: translateY(-1px);
+}
+
+.btn-field-action.btn-action-accent {
+  background: rgba(255, 121, 0, 0.12);
+  border-color: rgba(255, 121, 0, 0.4);
+  color: var(--orange-primary);
+}
+
+.btn-field-action.btn-action-accent:hover,
+.btn-field-action.btn-action-accent:active {
+  background: var(--orange-primary);
+  color: #000;
+  box-shadow: 0 0 15px var(--orange-glow);
+}
+
+.field-hint {
+  color: #FF9433;
+  font-size: 0.82rem;
+  margin-top: 6px;
+  margin-bottom: 0;
+  display: block;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Step Navigation Button Bar */
+.step-nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.step-nav-buttons.single-btn {
+  justify-content: flex-end;
 }
 
 /* Simulator Styles */
@@ -1201,9 +1385,111 @@
   .input-journey-grid,
   .tools-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
+
   .card-panel {
-    padding: 20px;
+    padding: 16px 14px !important;
+  }
+
+  .form-group-card {
+    padding: 16px 14px;
+  }
+
+  /* Setup Mode Tabs on Mobile */
+  .setup-mode-tabs {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .mode-tab-btn {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    justify-content: flex-start;
+  }
+
+  /* Step Navigation Buttons on Mobile: full-width, clean stack */
+  .step-nav-buttons {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .step-nav-buttons .btn-primary,
+  .step-nav-buttons .btn-secondary {
+    width: 100% !important;
+    min-height: 48px;
+    justify-content: center;
+    font-size: 0.98rem;
+  }
+
+  /* Mobile Fast Track Card */
+  .mobile-fast-track-card {
+    padding: 16px 14px !important;
+    margin-bottom: 20px;
+  }
+
+  .m-track-header h4 {
+    font-size: 1.15rem;
+  }
+
+  .m-copy-chip-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .m-copy-chip-item .btn-primary {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  .btn-launch-router {
+    font-size: 0.92rem;
+    padding: 14px 14px;
+    line-height: 1.4;
+  }
+
+  /* Bookmarklet Hero on Mobile */
+  .bkmk-hero-wrapper {
+    padding: 16px 14px !important;
+  }
+
+  .bkmk-title-wrap h4 {
+    font-size: 1.12rem;
+  }
+
+  .bkmk-cred-strip {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .bkmk-actions-cluster {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .btn-bkmk-copy,
+  .btn-bkmk-drag,
+  .btn-bkmk-test {
+    width: 100%;
+    min-height: 46px;
+  }
+
+  .field-actions-bar.two-cols {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .field-actions-bar.two-cols {
+    grid-template-columns: 1fr;
   }
 }
 

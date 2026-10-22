@@ -484,7 +484,7 @@ body {
   body {
     background: #090B0E !important;
     background-attachment: scroll !important;
-    padding-bottom: calc(85px + env(safe-area-inset-bottom, 20px));
+    padding-bottom: calc(140px + env(safe-area-inset-bottom, 30px)) !important;
   }
 
   /* Eliminate GPU compositing lag caused by blur filters on mobile */
