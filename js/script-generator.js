@@ -143,6 +143,13 @@ const ScriptGenerator = {
         setTimeout(function(){if(t.parentNode){t.style.opacity='0';t.style.transform='translateX(-50%) translateY(-10px)';setTimeout(function(){t.remove();},400);}},8500);
       }
 
+      var uStr=decodeURIComponent('${u}');
+      var pStr=decodeURIComponent('${p}');
+      if(!uStr){
+        toast('اكتب رقم تليفونك أولاً ⚠️','يرجى العودة لموقع أورانج وكتابة رقم التليفون الأرضي وباسورد الرسالة، ثم أعد نسخ أو حفظ البوكماركليت.',true);
+        return;
+      }
+
       function getDocs(){
         var ds=[document];
         try{
@@ -192,6 +199,38 @@ const ScriptGenerator = {
         return 0;
       }
 
+      function findWanMenu(){
+        var sel=qry('#smWAN,#mmWAN,#WAN,#wan,#dsl_connection,li[id*="WAN" i],a[id*="WAN" i],a[title*="WAN" i],li[title*="WAN" i],a[href*="wan" i],a[onclick*="wan" i]');
+        if(sel)return sel;
+        var ds=getDocs();
+        for(var d=0;d<ds.length;d++){
+          var candidates=ds[d].querySelectorAll('a,li,span,div');
+          for(var i=0;i<candidates.length;i++){
+            var t=(candidates[i].textContent||'').trim();
+            if(t==='WAN'||t==='wan'||t==='DSL Connection'||t==='إعدادات WAN'){
+              return candidates[i].closest('a,li')||candidates[i];
+            }
+          }
+        }
+        return null;
+      }
+
+      function findInternetMenu(){
+        var sel=qry('#mainNavigator #internet,#mainNavigator #mmInternet,#Internet,#nav_internet,a[title*="Internet" i],a[title*="الإنترنت"],li[title*="Internet" i]');
+        if(sel)return sel;
+        var ds=getDocs();
+        for(var d=0;d<ds.length;d++){
+          var candidates=ds[d].querySelectorAll('a,li,span,div');
+          for(var i=0;i<candidates.length;i++){
+            var t=(candidates[i].textContent||'').trim();
+            if(t==='Internet'||t==='الإنترنت'){
+              return candidates[i].closest('a,li')||candidates[i];
+            }
+          }
+        }
+        return null;
+      }
+
       var host=location.hostname;
       var isRouterHost=host==='192.168.1.1'||host==='192.168.0.1'||host==='192.168.1.254'||host.indexOf('192.168.')===0;
 
@@ -200,15 +239,15 @@ const ScriptGenerator = {
       if(!isRouterHost&&simBox){
         var simUser=simBox.querySelector('input[type="text"]');
         var simPass=simBox.querySelector('input[type="password"]');
-        var simBtn=simBox.querySelector('.zte-apply-btn,.hw-btn-apply,.hw-submit-btn,.zte-login-btn');
+        var simBtn=simBox.querySelector('.zte-btn-orange,.zte-apply-btn,.hw-btn-apply');
         if(simUser&&simPass){
           fire(simUser,'${u}');
           fire(simPass,'${p}');
           if(simBtn){
             simBtn.style.outline='3px solid #00D26A';
-            setTimeout(function(){simBtn.click();},600);
+            setTimeout(function(){simBtn.click();},500);
           }
-          toast('تجربة ناجحة داخل المحاكي! 🎉','تم تعبئة رقم خدمة أورانج ('+decodeURIComponent('${u}')+') وكلمة المرور في شاشة المحاكي بنجاح. عند استخدامها على الراوتر الحقيقي 192.168.1.1 ستتم البرمجة بنفس الطريقة والسرعة!',false);
+          toast('تجربة ناجحة داخل المحاكي! 🎉','تم تعبئة رقم خدمة أورانج ('+uStr+') وباسورد الخدمة في المحاكي بنجاح!',false);
           return;
         }
       }
@@ -236,50 +275,79 @@ const ScriptGenerator = {
         return;
       }
 
-      /* 2. WAN PPPoE Fields Discovery */
+      /* 2. WAN PPPoE Fields Discovery & Navigation */
+      var navStep=0;
       function runWanFill(){
+        navStep++;
         var filled=0;
         var passInputs=qryAll('input[type="password"]');
-        var passEl=passInputs.find(function(e){return e.id!=='Password'&&e.id!=='pc-login-password'&&e.id!=='password_login';})||passInputs[0];
-        var userEl=null;
+        var passEl=passInputs.find(function(e){
+          var id=(e.id||'').toLowerCase();
+          return id!=='password'&&id!=='frm_password'&&id!=='pc-login-password'&&id!=='password_login';
+        })||passInputs[0];
 
-        if(passEl){
-          var c=(passEl.closest?passEl.closest('table,form,#Internet_container,.content,tbody,.form-horizontal'):null)||(passEl.parentElement&&passEl.parentElement.parentElement&&passEl.parentElement.parentElement.parentElement);
+        var userEl=qry('#Username,#UserName,#Frm_Username,#Frm_PPPUsername,#pppoe-username,#WAN_Username,#wan_username,#txt_username,input[name*="user" i]:not(#LoginId):not(#pc-login-username)');
+
+        if(!userEl&&passEl){
+          var c=(passEl.closest?passEl.closest('table,form,.form-horizontal,.zte-wizard-modal,#Internet_container,.content,tbody'):null)||(passEl.parentElement&&passEl.parentElement.parentElement&&passEl.parentElement.parentElement.parentElement);
           if(c&&c.querySelectorAll){
             var t=[...c.querySelectorAll('input[type="text"],input:not([type])')].filter(function(e){return e.offsetParent!==null&&!e.disabled&&!e.readOnly;});
-            userEl=t.find(function(e){var s=((e.id||'')+(e.name||'')).toLowerCase();return s.indexOf('user')>-1||s.indexOf('acc')>-1||s.indexOf('name')>-1;})||t[0];
+            userEl=t.find(function(e){var s=((e.id||'')+(e.name||'')).toLowerCase();return s.indexOf('user')>-1||s.indexOf('acc')>-1||s.indexOf('name')>-1||s.indexOf('ppp')>-1;})||t[0];
           }
         }
 
-        if(!userEl)userEl=qry('input[name*="user" i],#username,#UserName,#Frm_Username,#pppoe-username,#WAN_Username,#wan_username,#txt_username');
-        if(!passEl)passEl=qry('input[name*="pass" i],#password,#Password,#Frm_Password,#pppoe-password,#WAN_Password,#wan_password,#txt_password');
+        if(userEl||passEl){
+          if(fire(userEl,'${u}'))filled++;
+          if(fire(passEl,'${p}'))filled++;
+          fire(qry('#INPUT_SSID2,#Frm_ESSID,#ssid-input,input[name*="ssid" i]'),'${s}');
+          fire(qry('#WpaPskKey,#Frm_KeyPassphrase,#KeyPassphrase,input[name*="wpa" i]'),'${w}');
 
-        if(fire(userEl,'${u}'))filled++;
-        if(fire(passEl,'${p}'))filled++;
-        fire(qry('#INPUT_SSID2,#Frm_ESSID,#ssid-input,input[name*="ssid" i]'),'${s}');
-        fire(qry('#WpaPskKey,#Frm_KeyPassphrase,#KeyPassphrase,input[name*="wpa" i],input[name*="preshared" i]'),'${w}');
-
-        var applyBtn=qry('input[value="Apply"],input[value="حفظ"],#applyBtn,#save-btn,#Btn_Apply,button.Apply,input[type="button"][value="Apply"],.zte-apply-btn,.hw-btn-apply,#btnApply,#btn_save');
-
-        if(filled>0){
-          if(applyBtn){
-            applyBtn.style.outline='3px solid #00D26A';
-            setTimeout(function(){applyBtn.click();},600);
-            toast('تمت البرمجة بنجاح! 🎉','تم إدخال رقم الخدمة الأرضي <strong>('+decodeURIComponent('${u}')+')</strong> وكلمة المرور، والضغط على <strong>Apply</strong> لحفظ الإعدادات!<br>لمبة الإنترنت ستعمل باللون الأخضر خلال ثوانٍ معدودة.',false);
-          }else{
-            toast('تم تعبئة البيانات بنجاح! ⚡','تم إدخال رقم الخدمة <strong>('+decodeURIComponent('${u}')+')</strong> والباسورد.<br>يرجى الضغط على زر <strong>Apply / حفظ</strong> بالأسفل لتثبيت الإعدادات.',false);
-          }
-        }else{
-          /* Check if on Home Page and needs to navigate to Internet */
-          var netMenu=qry('#mainNavigator #internet,#mainNavigator #mmInternet,#Internet,#nav_internet,a[title*="Internet" i],a[title*="الإنترنت"],li[title*="Internet" i],a[href*="internet" i]');
-          if(netMenu){
-            toast('جاري الانتقال لصفحة الإنترنت... ⏳','جاري فتح تبويب إعدادات الإنترنت (Internet / WAN) في الراوتر تلقائياً...',false);
-            netMenu.click();
-            setTimeout(runWanFill,1200);
-          }else{
-            toast('لم نتمكن من تحديد الخانات في هذه الصفحة ⚠️','يرجى التأكد من الضغط على تبويب <strong>Internet</strong> ثم <strong>DSL Connection</strong> (أو WAN) في الراوتر، ثم الضغط على هذا الزر مرة أخرى.',true);
+          var applyBtn=qry('input[value="Apply"],input[value="حفظ"],input[value="Next"],#applyBtn,#save-btn,#Btn_Apply,button.Apply,.zte-btn-orange,input[type="button"][value="Apply"]');
+          if(filled>0){
+            if(applyBtn){
+              applyBtn.style.outline='3px solid #00D26A';
+              setTimeout(function(){applyBtn.click();},600);
+              toast('تمت البرمجة بنجاح! 🎉','تم إدخال رقم الخدمة <strong>('+uStr+')</strong> وكلمة المرور، والضغط على <strong>حفظ/Apply</strong> تلقائياً! 🚀',false);
+            }else{
+              toast('تم تعبئة البيانات بنجاح! ⚡','تم إدخال رقم الخدمة <strong>('+uStr+')</strong> والباسورد.<br>يرجى الضغط على زر Apply / حفظ بالأسفل.',false);
+            }
+            return;
           }
         }
+
+        /* Avoid infinite loop (max 3 tries) */
+        if(navStep>=4){
+          toast('خطوة أخيرة مطلوبة يدويًا 💡','اضغط بإصبعك على تبويب <strong>WAN</strong> في القائمة باليسار، ثم اضغط على زر البوكماركليت مرة واحدة وسيقوم بملء كل شيء فوراً!',true);
+          return;
+        }
+
+        /* 1. Check if WAN sub-menu is visible (e.g. on ZTE Internet page like in the iPhone screenshot) */
+        var wanBtn=findWanMenu();
+        if(wanBtn){
+          toast('جاري فتح إعدادات WAN... ⚡','تم العثور على تبويب WAN، جاري فتحه فوراً...',false);
+          wanBtn.click();
+          setTimeout(function(){
+            var editBtn=qry('a[title*="Modify" i],a[title*="Edit" i],input[value*="Modify" i],input[value*="Edit" i],.modify-btn,.edit-icon,a[onclick*="modify" i],a[onclick*="edit" i]');
+            if(editBtn)editBtn.click();
+            setTimeout(runWanFill,600);
+          },700);
+          return;
+        }
+
+        /* 2. If not in Internet yet, click Internet then WAN */
+        var netMenu=findInternetMenu();
+        if(netMenu){
+          toast('جاري الانتقال لصفحة الإنترنت... ⏳','جاري فتح تبويب الإنترنت (Internet) ثم WAN تلقائياً...',false);
+          netMenu.click();
+          setTimeout(function(){
+            var w=findWanMenu();
+            if(w)w.click();
+            setTimeout(runWanFill,800);
+          },600);
+          return;
+        }
+
+        toast('لم نتمكن من تحديد الخانات ⚠️','يرجى الضغط على تبويب <strong>Internet</strong> ثم <strong>WAN</strong> في الراوتر، ثم الضغط على هذا الزر.',true);
       }
 
       runWanFill();
