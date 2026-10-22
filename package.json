@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Orange Egypt Smart Home Internet Self-Setup & Diagnostic Platform",
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node dev-server.js"
   },
   "keywords": [
     "orange",
