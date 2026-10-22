@@ -166,7 +166,7 @@ const App = {
     const wifiSsid = (document.getElementById('input-wifi-ssid')?.value || '').trim();
     const wifiPass = (document.getElementById('input-wifi-pass')?.value || '').trim();
 
-    // In Orange Egypt, username is clean landline e.g. 033014556 without @orange or .eg
+    // In Orange Egypt, username is clean landline e.g. 02xxxxxxxx without @orange or .eg
     const cleanLandline = rawUser.split('@')[0].trim();
 
     this.config = {
@@ -178,14 +178,14 @@ const App = {
 
     // Update Mobile Fast-Track values in Step 4
     const mUserEl = document.getElementById('mobile-copy-user-val');
-    if (mUserEl) mUserEl.textContent = cleanLandline || '033014556';
+    if (mUserEl) mUserEl.textContent = cleanLandline || '—';
 
     const mPassEl = document.getElementById('mobile-copy-pass-val');
     if (mPassEl) mPassEl.textContent = rawPass ? (rawPass.length > 3 ? '•••••••• (' + rawPass.substring(0, 2) + '...)' : '••••') : 'اكتب الباسورد بالصندوق';
 
     // Update Bookmarklet Hero credential labels in Step 4
     const bkmkUser = document.getElementById('bkmk-cred-user');
-    if (bkmkUser) bkmkUser.textContent = cleanLandline || '033014556';
+    if (bkmkUser) bkmkUser.textContent = cleanLandline || '—';
 
     const bkmkPass = document.getElementById('bkmk-cred-pass');
     if (bkmkPass) bkmkPass.textContent = rawPass ? (rawPass.length > 3 ? '•••••••• (' + rawPass.substring(0, 2) + '...)' : '••••') : 'اكتب الباسورد بالخطوة السابقة';
@@ -205,7 +205,11 @@ const App = {
   },
 
   copyCleanUser() {
-    const clean = (this.config.username || '033014556').split('@')[0].trim();
+    const clean = (this.config.username || '').split('@')[0].trim();
+    if (!clean) {
+      showToast('اكتب رقم التليفون الأرضي أولاً بالخانة ⚠️');
+      return;
+    }
     copyTextToClipboard(clean);
     showToast(`تم نسخ رقم التليفون الأرضي: ${clean} 📋`);
   },

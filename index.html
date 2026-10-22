@@ -305,7 +305,7 @@
           <div class="form-group-card highlight">
             <label>📞 رقم التليفون الأرضي / اسم المستخدم (من رسالة أورانج SMS):</label>
             <div class="input-with-tools">
-              <input type="text" id="input-orange-user" placeholder="مثال: 033014556 أو 02xxxxxxxx" oninput="App.syncConfig()" />
+              <input type="text" id="input-orange-user" placeholder="مثال: 02xxxxxxxx أو 03xxxxxxx" oninput="App.syncConfig()" />
               <button class="btn-copy" onclick="copyTextToClipboard(document.getElementById('input-orange-user').value.split('@')[0])">نسخ 📋</button>
             </div>
             <small style="color:#FF9433;font-size:0.8rem;margin-top:4px;display:block;font-weight:600;">
@@ -352,7 +352,7 @@
             <div class="m-copy-chip-item">
               <div class="chip-info">
                 <span class="chip-label">1. رقم التليفون الأرضي الصافي (Username)</span>
-                <strong class="chip-val" id="mobile-copy-user-val">033014556</strong>
+                <strong class="chip-val" id="mobile-copy-user-val">—</strong>
               </div>
               <button class="btn-primary" onclick="App.copyCleanUser()">نسخ الرقم 📋</button>
             </div>
@@ -409,7 +409,7 @@
             <div class="bkmk-cred-strip">
               <div class="bkmk-cred-pill">
                 <span class="lbl">📞 رقم التليفون الأرضي:</span>
-                <span class="val" id="bkmk-cred-user">033014556</span>
+                <span class="val" id="bkmk-cred-user">—</span>
               </div>
               <div class="bkmk-cred-pill">
                 <span class="lbl">🔑 كلمة المرور:</span>

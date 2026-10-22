@@ -51,8 +51,9 @@ const RouterSimulator = {
     const steps = router.simulator.steps;
     const currentStep = steps[this.currentStepIndex];
 
-    const usernameVal = this.currentConfig.username || '0233445566@orange.eg';
-    const passwordVal = this.currentConfig.password || 'OrangePass123';
+    const usernameClean = (this.currentConfig.username || '').split('@')[0].trim();
+    const usernameVal = usernameClean;
+    const passwordVal = this.currentConfig.password || '';
     const wifiSsidVal = this.currentConfig.wifiSsid || 'Orange_Home_WiFi';
     const wifiPassVal = this.currentConfig.wifiPass || 'Orange#2026';
 
@@ -84,7 +85,7 @@ const RouterSimulator = {
             <strong>الخطوة ${this.currentStepIndex + 1}: ${currentStep.titleAr}</strong>
             <p>${currentStep.hintAr}</p>
           </div>
-          <button class="sim-copy-all-btn" onclick="copyTextToClipboard('${this.currentStepIndex === 0 ? 'admin' : (this.currentStepIndex === 1 ? usernameVal : wifiSsidVal)}')">
+          <button class="sim-copy-all-btn" onclick="copyTextToClipboard('${this.currentStepIndex === 0 ? (router.defaultUsername || 'user') : (this.currentStepIndex === 1 ? (usernameVal || 'user') : wifiSsidVal)}')">
             <span class="copy-icon">📋</span> نسخ القيمة المطلوبة
           </button>
         </div>
@@ -97,7 +98,7 @@ const RouterSimulator = {
             passwordVal,
             wifiSsidVal,
             wifiPassVal
-          })}
+          }, containerId)}
         </div>
 
         <!-- Simulator Footer Controls -->
@@ -118,7 +119,7 @@ const RouterSimulator = {
     container.innerHTML = html;
   },
 
-  renderScreenContent(screenType, data) {
+  renderScreenContent(screenType, data, containerId) {
     const { router, usernameVal, passwordVal, wifiSsidVal, wifiPassVal } = data;
 
     switch (screenType) {
@@ -264,96 +265,286 @@ const RouterSimulator = {
           </div>
         `;
 
-      // 4. ZTE Modern Screens (H188A / Wi-Fi 6)
+      // 4. ZTE Authentic Wizard Screens (ZXHN H188A V2.0.1P2_EGO & VDSL)
+      case 'zte_h188a_login':
       case 'zte_modern_login':
       case 'zte_classic_login':
         return `
-          <div class="zte-ui login-screen">
-            <div class="zte-card-login">
-              <div class="zte-logo">ZTE Home Gateway</div>
-              <h3>${router.nameAr}</h3>
-              <div class="zte-input-field">
-                <label>اسم المستخدم (Username):</label>
-                <input type="text" value="${router.defaultUsername || 'user'}" readonly />
-              </div>
-              <div class="zte-input-field active-glow">
-                <label>كلمة المرور (Password):</label>
-                <div class="input-with-action">
-                  <input type="password" value="••••••••" placeholder="مطبوع في ملصق الظهر" readonly />
-                  <span class="zte-label-badge">من ملصق الظهر</span>
+          <div class="zte-h188a-shell">
+            <div class="zte-h188a-topbar">
+              <span class="zte-orange-logo-box">orange</span>
+            </div>
+            <div class="zte-h188a-nav">
+              <span class="active">Home</span>
+              <span>Internet</span>
+              <span>Local Network</span>
+              <span>Management & Diagnosis</span>
+            </div>
+            <div class="zte-h188a-canvas">
+              <div class="zte-wizard-modal" style="max-width:440px;">
+                <div class="zte-wizard-header">
+                  <span class="zte-step-title">ZTE ZXHN H188A - User Login</span>
+                  <button class="zte-close-btn" title="Close">✕</button>
+                </div>
+                <div class="zte-wizard-body" style="padding:28px 24px;">
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">Username:</span>
+                    <div class="zte-field-ctrl">
+                      <input type="text" class="zte-input" value="${router.defaultUsername || 'user'}" style="width:180px; font-weight:700;" readonly />
+                      <span class="zte-input-suffix" style="font-size:11px;">ثابت</span>
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">Password:</span>
+                    <div class="zte-field-ctrl">
+                      <input type="password" id="sim-zte-login-pass" class="zte-input" value="••••••••" placeholder="مطبوع في ملصق الظهر" style="width:180px;" readonly />
+                      <button class="zte-copy-pill" onclick="copyTextToClipboard('${router.defaultUsername || 'user'}')">نسخ user</button>
+                    </div>
+                  </div>
+                  <div style="font-size:11px; color:#FF9433; margin-top:2px; direction:rtl; text-align:right;">
+                    💡 اسم المستخدم: <strong>${router.defaultUsername || 'user'}</strong> والباسورد مطبوع على ملصق ظهر الراوتر
+                  </div>
+                  <div class="zte-wizard-footer-actions" style="justify-content:center; margin-top:14px;">
+                    <button class="zte-btn-orange" style="width:100%; height:32px; font-size:13px;" onclick="RouterSimulator.nextStep('${containerId}')">
+                      Login / تسجيل الدخول وفتح معالج الإعدادات →
+                    </button>
+                  </div>
                 </div>
               </div>
-              <button class="zte-login-btn">تسجيل الدخول / Login</button>
             </div>
+            <div class="zte-h188a-copyright">©2008-2021 ZTE Corporation. All rights reserved | H188A V2.0.1P2_EGO</div>
           </div>
         `;
 
+      case 'zte_h188a_step1':
       case 'zte_modern_wan':
       case 'zte_classic_wan':
         return `
-          <div class="zte-ui wan-screen">
-            <div class="zte-top-menu">
-              <div class="menu-brand">Orange Internet Gateway</div>
-              <div class="menu-tabs">
-                <span class="active">Internet (الإنترنت)</span>
-                <span>Local Network</span>
-                <span>Management</span>
+          <div class="zte-h188a-shell">
+            <div class="zte-h188a-topbar">
+              <span class="zte-orange-logo-box">orange</span>
+            </div>
+            <div class="zte-h188a-nav">
+              <span>Home</span>
+              <span class="active">Internet</span>
+              <span>Local Network</span>
+              <span>Management & Diagnosis</span>
+            </div>
+            <div class="zte-h188a-canvas">
+              <div class="zte-wizard-modal">
+                <div class="zte-wizard-header">
+                  <span class="zte-step-title">STEP1 - PPP Configuration</span>
+                  <button class="zte-close-btn" title="Close" onclick="showToast('معالج الإعداد السريع لراوتر أورانج H188A')">✕</button>
+                </div>
+                <div class="zte-wizard-body">
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">DSL Transfer Mode</span>
+                    <div class="zte-field-ctrl">
+                      <select class="zte-select" style="width:140px;">
+                        <option selected>ATM</option>
+                        <option>PTM</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">VPI/VCI</span>
+                    <div class="zte-field-ctrl" style="gap:4px;">
+                      <input type="text" value="0" class="zte-input" style="width:42px; text-align:center;" readonly />
+                      <span style="color:#6B7280; font-weight:bold;">/</span>
+                      <input type="text" value="35" class="zte-input" style="width:42px; text-align:center;" readonly />
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">Username</span>
+                    <div class="zte-field-ctrl">
+                      <input type="text" id="sim-zte-ppp-user" class="zte-input" value="${usernameVal}" placeholder="رقم التليفون الأرضي" style="width:160px;" readonly />
+                      <span class="zte-input-suffix">@orange</span>
+                      ${usernameVal ? `<button class="zte-copy-pill" onclick="copyTextToClipboard('${usernameVal}')">نسخ 📋</button>` : ''}
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">Password</span>
+                    <div class="zte-field-ctrl">
+                      <input type="password" id="sim-zte-ppp-pass" class="zte-input" value="${passwordVal}" placeholder="كلمة المرور في SMS" style="width:160px;" readonly />
+                      ${passwordVal ? `<button class="zte-copy-pill" onclick="copyTextToClipboard('${passwordVal}')">نسخ 📋</button>` : ''}
+                      <button class="zte-peek-pill" onclick="toggleSimPass('sim-zte-ppp-pass')">👁️</button>
+                    </div>
+                  </div>
+                  <div class="zte-wizard-footer-actions">
+                    <button class="zte-btn-orange-outline" onclick="RouterSimulator.nextStep('${containerId}')">Skip</button>
+                    <button class="zte-btn-orange" onclick="RouterSimulator.nextStep('${containerId}')">Next</button>
+                  </div>
+                </div>
               </div>
             </div>
-              <h4>WAN Connection - إعدادات الاتصال بمزود الخدمة (Orange)</h4>
-              <div class="zte-row-field active-glow">
-                <label>Username (رقم التليفون الأرضي):</label>
-                <div class="zte-copy-wrapper" style="display:flex; align-items:center; gap:6px;">
-                  <input type="text" value="${usernameVal.split('@')[0] || '033014556'}" readonly />
-                  <span style="background:rgba(255,255,255,0.1); padding:8px 12px; border-radius:4px; font-weight:700; color:var(--orange-primary);">@Orange</span>
-                  <button class="btn-copy-chip" onclick="copyTextToClipboard('${usernameVal.split('@')[0]}')">نسخ 📋</button>
-                </div>
-                <span class="field-hint" style="color:#FF9433;">💡 الصق الرقم الأرضي فقط لأن @Orange ثابتة في الراوتر</span>
-              </div>
-              <div class="zte-row-field active-glow">
-                <label>Password (كلمة المرور):</label>
-                <div class="zte-copy-wrapper">
-                  <input type="password" id="zte-wan-pass" value="${passwordVal}" readonly />
-                  <button class="btn-copy-chip" onclick="copyTextToClipboard('${passwordVal}')">نسخ 📋</button>
-                  <button class="btn-peek-chip" onclick="toggleSimPass('zte-wan-pass')">👁️</button>
-                </div>
-              </div>
-              <div class="zte-action-row">
-                <button class="zte-apply-btn pulsed" onclick="RouterSimulator.handleSimApply(this)">Apply / حفظ ومزامنة</button>
-              </div>
-            </div>
+            <div class="zte-h188a-copyright">©2008-2021 ZTE Corporation. All rights reserved | H188A V2.0.1P2_EGO</div>
           </div>
         `;
 
+      case 'zte_h188a_step2':
+        return `
+          <div class="zte-h188a-shell">
+            <div class="zte-h188a-topbar">
+              <span class="zte-orange-logo-box">orange</span>
+            </div>
+            <div class="zte-h188a-nav">
+              <span>Home</span>
+              <span>Internet</span>
+              <span class="active">Local Network</span>
+              <span>Management & Diagnosis</span>
+            </div>
+            <div class="zte-h188a-canvas">
+              <div class="zte-wizard-modal">
+                <div class="zte-wizard-header">
+                  <span class="zte-step-title">STEP2 - WiFi(2.4G) Configuration</span>
+                  <button class="zte-close-btn" title="Close">✕</button>
+                </div>
+                <div class="zte-wizard-body">
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">WLAN On/Off</span>
+                    <div class="zte-field-ctrl">
+                      <label class="zte-radio"><input type="radio" name="sim_wlan24" checked /> On</label>
+                      <label class="zte-radio" style="margin-left:14px;"><input type="radio" name="sim_wlan24" /> Off</label>
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">SSID Name</span>
+                    <div class="zte-field-ctrl">
+                      <span class="zte-input-prefix">Orange-</span>
+                      <input type="text" class="zte-input" value="${wifiSsidVal.replace(/^Orange[-_]/i, '')}" style="width:170px;" readonly />
+                      <button class="zte-copy-pill" onclick="copyTextToClipboard('${wifiSsidVal}')">نسخ 📋</button>
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">Encryption Type</span>
+                    <div class="zte-field-ctrl">
+                      <select class="zte-select" style="width:200px;">
+                        <option selected>WPA/WPA2-PSK-TKIP/AES</option>
+                        <option>WPA2-PSK</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">WPA Passphrase</span>
+                    <div class="zte-field-ctrl">
+                      <input type="password" id="sim-zte-pass24" class="zte-input" value="${wifiPassVal}" style="width:170px;" readonly />
+                      <button class="zte-copy-pill" onclick="copyTextToClipboard('${wifiPassVal}')">نسخ 📋</button>
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label"></span>
+                    <div class="zte-field-ctrl">
+                      <label class="zte-checkbox">
+                        <input type="checkbox" onchange="toggleSimPass('sim-zte-pass24')" /> show password
+                      </label>
+                    </div>
+                  </div>
+                  <div class="zte-wizard-footer-actions">
+                    <button class="zte-btn-orange" onclick="RouterSimulator.prevStep('${containerId}')">Back</button>
+                    <button class="zte-btn-orange-outline" onclick="RouterSimulator.nextStep('${containerId}')">Skip</button>
+                    <button class="zte-btn-orange" onclick="RouterSimulator.nextStep('${containerId}')">Next</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="zte-h188a-copyright">©2008-2021 ZTE Corporation. All rights reserved | H188A V2.0.1P2_EGO</div>
+          </div>
+        `;
+
+      case 'zte_h188a_step3':
       case 'zte_modern_wifi':
       case 'zte_classic_wifi':
       default:
         return `
-          <div class="zte-ui wifi-screen">
-            <div class="zte-inner-form">
-              <h4>WLAN Configuration - اسم وباسورد الواي فاي</h4>
-              <div class="zte-row-field">
-                <label>SSID Name:</label>
-                <div class="zte-copy-wrapper">
-                  <input type="text" value="${wifiSsidVal}" readonly />
-                  <button class="btn-copy-chip" onclick="copyTextToClipboard('${wifiSsidVal}')">نسخ 📋</button>
+          <div class="zte-h188a-shell">
+            <div class="zte-h188a-topbar">
+              <span class="zte-orange-logo-box">orange</span>
+            </div>
+            <div class="zte-h188a-nav">
+              <span>Home</span>
+              <span>Internet</span>
+              <span class="active">Local Network</span>
+              <span>Management & Diagnosis</span>
+            </div>
+            <div class="zte-h188a-canvas">
+              <div class="zte-wizard-modal">
+                <div class="zte-wizard-header">
+                  <span class="zte-step-title">STEP3 - WiFi(5G) Configuration</span>
+                  <button class="zte-close-btn" title="Close">✕</button>
                 </div>
-              </div>
-              <div class="zte-row-field active-glow">
-                <label>WPA Passphrase:</label>
-                <div class="zte-copy-wrapper">
-                  <input type="password" id="zte-wifi-pass" value="${wifiPassVal}" readonly />
-                  <button class="btn-copy-chip" onclick="copyTextToClipboard('${wifiPassVal}')">نسخ 📋</button>
-                  <button class="btn-peek-chip" onclick="toggleSimPass('zte-wifi-pass')">👁️</button>
+                <div class="zte-wizard-body">
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">WLAN On/Off</span>
+                    <div class="zte-field-ctrl">
+                      <label class="zte-radio"><input type="radio" name="sim_wlan5g" checked /> On</label>
+                      <label class="zte-radio" style="margin-left:14px;"><input type="radio" name="sim_wlan5g" /> Off</label>
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">SSID Name</span>
+                    <div class="zte-field-ctrl">
+                      <span class="zte-input-prefix">Orange-</span>
+                      <input type="text" class="zte-input" value="${wifiSsidVal.replace(/^Orange[-_]/i, '')}${wifiSsidVal.toLowerCase().includes('5g') ? '' : '-5G'}" style="width:170px;" readonly />
+                      <button class="zte-copy-pill" onclick="copyTextToClipboard('${wifiSsidVal}-5G')">نسخ 📋</button>
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">Encryption Type</span>
+                    <div class="zte-field-ctrl">
+                      <select class="zte-select" style="width:200px;">
+                        <option selected>WPA/WPA2-PSK-TKIP/AES</option>
+                        <option>WPA2-PSK</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label">WPA Passphrase</span>
+                    <div class="zte-field-ctrl">
+                      <input type="password" id="sim-zte-pass5g" class="zte-input" value="${wifiPassVal}" style="width:170px;" readonly />
+                      <button class="zte-copy-pill" onclick="copyTextToClipboard('${wifiPassVal}')">نسخ 📋</button>
+                    </div>
+                  </div>
+                  <div class="zte-field-row">
+                    <span class="zte-field-label"></span>
+                    <div class="zte-field-ctrl">
+                      <label class="zte-checkbox">
+                        <input type="checkbox" onchange="toggleSimPass('sim-zte-pass5g')" /> show password
+                      </label>
+                    </div>
+                  </div>
+                  <div class="zte-wizard-footer-actions">
+                    <button class="zte-btn-orange" onclick="RouterSimulator.prevStep('${containerId}')">Back</button>
+                    <button class="zte-btn-orange-outline" onclick="RouterSimulator.handleZteFinish(this)">Skip</button>
+                    <button class="zte-btn-orange" onclick="RouterSimulator.handleZteFinish(this)">Next / Save</button>
+                  </div>
                 </div>
-              </div>
-              <div class="zte-action-row">
-                <button class="zte-apply-btn pulsed" onclick="RouterSimulator.handleSimApply(this)">Save / حفظ الإعدادات</button>
               </div>
             </div>
+            <div class="zte-h188a-copyright">©2008-2021 ZTE Corporation. All rights reserved | H188A V2.0.1P2_EGO</div>
           </div>
         `;
     }
+  },
+
+  handleZteFinish(btn) {
+    if (!btn) return;
+    const origText = btn.innerHTML;
+    btn.innerHTML = 'Saving... ⏳';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.innerHTML = '✅ Saved Successfully!';
+      btn.style.background = '#00D26A';
+      btn.style.borderColor = '#00D26A';
+      if (typeof showToast === 'function') {
+        showToast('🎉 تهانينا! تم حفظ إعدادات راوتر ZTE H188A ولمبة الإنترنت زرقاء ثابتة 🔵');
+      }
+      setTimeout(() => {
+        btn.innerHTML = origText;
+        btn.disabled = false;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+      }, 5000);
+    }, 1200);
   },
 
   handleSimApply(btn) {

@@ -262,7 +262,7 @@
 
         <div class="field-group">
           <label>رقم التليفون الأرضي / اسم المستخدم:</label>
-          <input type="text" id="auto-username" placeholder="مثال: 033014556 أو 02xxxxxxxx" value="${savedConfig.username || ''}" />
+          <input type="text" id="auto-username" placeholder="مثال: 02xxxxxxxx أو 03xxxxxxx" value="${savedConfig.username || ''}" />
           <div style="font-size:11px; color:#FF9433; margin-top:3px;">💡 اكتب الرقم الأرضي فقط بدون @Orange لأن الراوتر يضيفها تلقائياً</div>
         </div>
 

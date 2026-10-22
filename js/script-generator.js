@@ -10,7 +10,7 @@ const ScriptGenerator = {
    * or executed via bookmarklet on the router page (192.168.1.1)
    */
   generateAutoFillScript(routerId, config) {
-    // In Orange Egypt, username is clean landline e.g. 033014556 without @orange or .eg
+    // In Orange Egypt, username is clean landline e.g. 02xxxxxxxx without @orange or .eg
     const rawUser = (config.username || '').trim();
     const cleanUser = rawUser.split('@')[0].trim();
     const password = (config.password || '').trim();

@@ -86,21 +86,27 @@ const ROUTER_DATABASE = {
         steps: [
           {
             titleAr: 'دخول راوتر ZTE H188A الحديث',
-            hintAr: 'اكتب user في اسم المستخدم والباسورد المطبوع على الظهر',
+            hintAr: 'اكتب user في اسم المستخدم والباسورد المطبوع على ملصق ظهر الراوتر',
             activeField: 'login_pass',
-            screenType: 'zte_modern_login'
+            screenType: 'zte_h188a_login'
           },
           {
-            titleAr: 'تفعيل اشتراك أورانج إنترنت',
-            hintAr: 'اكتب رقم التليفون الأرضي فقط (بدون @ لأن الراوتر مبرمج على @Orange تلقائياً) والباسورد من رسالة SMS',
+            titleAr: 'STEP 1: إعدادات PPP / تفعيل الإنترنت',
+            hintAr: 'اختر ATM ثم اكتب رقم التليفون الأرضي الصافي (الراوتر يضيف @orange تلقائياً) وباسورد رسالة SMS',
             activeField: 'wan_credentials',
-            screenType: 'zte_modern_wan'
+            screenType: 'zte_h188a_step1'
           },
           {
-            titleAr: 'ضبط ترددات الواي فاي 2.4G و 5G',
-            hintAr: 'يمكنك اختيار اسم وباسورد واحد للترددين لسهولة الاتصال',
-            activeField: 'wifi_settings',
-            screenType: 'zte_modern_wifi'
+            titleAr: 'STEP 2: ضبط واي فاي 2.4G Configuration',
+            hintAr: 'تسمية شبكة التردد 2.4GHz وباسورد الحماية وخاصية إظهار كلمة المرور',
+            activeField: 'wifi_settings_24',
+            screenType: 'zte_h188a_step2'
+          },
+          {
+            titleAr: 'STEP 3: ضبط واي فاي 5G Configuration',
+            hintAr: 'تسمية شبكة التردد فائق السرعة 5GHz وباسورد الحماية وحفظ الإعدادات',
+            activeField: 'wifi_settings_5g',
+            screenType: 'zte_h188a_step3'
           }
         ]
       }

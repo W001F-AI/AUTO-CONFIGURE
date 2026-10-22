@@ -1857,4 +1857,291 @@
   font-weight: 700;
 }
 
+/* ==========================================================================
+   AUTHENTIC ZTE H188A ROUTER WIZARD SIMULATOR STYLES
+   ========================================================================== */
+.zte-h188a-shell {
+  background: #f7f7f8;
+  min-height: 460px;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Tahoma, -apple-system, sans-serif;
+  direction: ltr;
+  text-align: left;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.zte-h188a-topbar {
+  background: #FF6600;
+  height: 48px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+}
+
+.zte-orange-logo-box {
+  background: #000;
+  color: #fff;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: -0.5px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.zte-h188a-nav {
+  background: #EAEBED;
+  height: 38px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  border-bottom: 1px solid #D6D8DC;
+  font-size: 13px;
+  color: #4B5563;
+  font-weight: 600;
+}
+
+.zte-h188a-nav span {
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.zte-h188a-nav span:hover {
+  color: #FF6600;
+}
+
+.zte-h188a-nav span.active {
+  color: #FF6600;
+  border-bottom: 2px solid #FF6600;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.zte-h188a-canvas {
+  flex: 1;
+  padding: 30px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F4F5F7;
+}
+
+.zte-wizard-modal {
+  background: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 580px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.zte-wizard-header {
+  background: linear-gradient(to bottom, #FAFAFA, #ECEEF1);
+  border-bottom: 1px solid #D1D5DB;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.zte-step-title {
+  color: #1F2937;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.zte-close-btn {
+  width: 20px;
+  height: 20px;
+  background: #FF6600;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.zte-wizard-body {
+  padding: 24px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.zte-field-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.zte-field-label {
+  width: 145px;
+  font-size: 12px;
+  color: #374151;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.zte-field-ctrl {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.zte-input {
+  background: #FFFFFF;
+  border: 1px solid #9CA3AF;
+  border-radius: 2px;
+  height: 26px;
+  padding: 2px 8px;
+  font-size: 12px;
+  color: #111827;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.zte-input:focus {
+  border-color: #FF6600;
+}
+
+.zte-input-prefix,
+.zte-input-suffix {
+  background: #E5E7EB;
+  border: 1px solid #9CA3AF;
+  border-radius: 2px;
+  height: 26px;
+  padding: 0 8px;
+  font-size: 12px;
+  color: #4B5563;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.zte-select {
+  background: #FFFFFF;
+  border: 1px solid #9CA3AF;
+  border-radius: 2px;
+  height: 26px;
+  padding: 2px 8px;
+  font-size: 12px;
+  color: #111827;
+  outline: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.zte-radio,
+.zte-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+}
+
+.zte-copy-pill {
+  background: #FF6600;
+  color: #fff;
+  border: none;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.zte-copy-pill:hover {
+  opacity: 0.9;
+}
+
+.zte-peek-pill {
+  background: #4B5563;
+  color: #fff;
+  border: none;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.zte-wizard-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid #E5E7EB;
+}
+
+.zte-btn-orange {
+  background: linear-gradient(to bottom, #FF7900, #F16E00);
+  border: 1px solid #D95E00;
+  color: #FFFFFF;
+  height: 28px;
+  padding: 0 24px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: transform 0.1s, opacity 0.15s;
+}
+
+.zte-btn-orange:hover {
+  opacity: 0.95;
+}
+
+.zte-btn-orange:active {
+  transform: scale(0.98);
+}
+
+.zte-btn-orange-outline {
+  background: linear-gradient(to bottom, #FFFFFF, #F3F4F6);
+  border: 1px solid #FF7900;
+  color: #FF7900;
+  height: 28px;
+  padding: 0 24px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.15s;
+}
+
+.zte-btn-orange-outline:hover {
+  background: #FFF5EB;
+}
+
+.zte-h188a-copyright {
+  text-align: center;
+  padding: 14px 16px;
+  font-size: 11px;
+  color: #6B7280;
+  border-top: 1px solid #E5E7EB;
+  background: #F9FAFB;
+}
+
+
 
