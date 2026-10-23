@@ -6,7 +6,7 @@
 
 const App = {
   currentStep: 1,
-  selectedRouterId: 'orange-dg8045',
+  selectedRouterId: 'orange-h188a',
   currentCategory: 'all',
   setupMode: 'auto', // 'auto', 'sim', or 'code'
 
@@ -114,9 +114,10 @@ const App = {
     }
 
     grid.innerHTML = filtered.map(router => `
-      <div class="router-card ${router.id === this.selectedRouterId ? 'selected' : ''}" onclick="App.selectRouter('${router.id}')">
+      <div class="router-card ${router.id === this.selectedRouterId ? 'selected' : ''} ${router.popular || router.featured ? 'featured-glow-card' : ''}" data-router-id="${router.id}" onclick="App.selectRouter('${router.id}')">
         ${router.badge ? `<span class="router-badge-top">${router.badge}</span>` : ''}
         <div class="router-thumb-wrap">
+          <div class="router-cyber-frame"></div>
           <img src="${router.image}" alt="${router.nameAr}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
           <div class="router-svg-fallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; background:linear-gradient(135deg, #0e121a, #161c28); flex-direction:column; gap:8px;">
             <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
@@ -163,6 +164,18 @@ const App = {
 
     const passNoteEl = document.getElementById('router-sticker-pass');
     if (passNoteEl) passNoteEl.textContent = router.passwordNote;
+
+    const userNoteEl = document.getElementById('router-sticker-user');
+    if (userNoteEl) userNoteEl.textContent = router.defaultUsername || 'admin';
+
+    const showcaseImg = document.getElementById('step3-router-img');
+    if (showcaseImg) showcaseImg.src = router.image;
+
+    const showcaseName = document.getElementById('step3-router-name');
+    if (showcaseName) showcaseName.textContent = router.nameAr;
+
+    const showcaseBadge = document.getElementById('step3-router-badge');
+    if (showcaseBadge) showcaseBadge.textContent = router.badge || 'الموديل المختار';
 
     this.renderRouterCards();
     this.refreshSimulator();

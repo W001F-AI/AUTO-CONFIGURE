@@ -267,7 +267,25 @@
         <div class="gateway-portal-grid">
           <!-- Gateway Action Launcher -->
           <div class="gateway-action-card">
-            <div class="gateway-ip-badge" id="display-gateway-ip">192.168.1.1</div>
+            <!-- Selected Router Showcase with Cyber Glowing Frame -->
+            <div class="selected-router-showcase" id="selected-router-showcase">
+              <div class="router-thumb-mini-wrap">
+                <div class="router-cyber-frame"></div>
+                <img id="step3-router-img" src="./assets/images/orange_h188a.jpg" alt="Selected Router" />
+              </div>
+              <div class="showcase-details">
+                <div class="showcase-badge-row">
+                  <span class="showcase-badge" id="step3-router-badge">الجيل السادس الأحدث 🔥</span>
+                  <span class="showcase-status-dot">متصل 🟢</span>
+                </div>
+                <h4 id="step3-router-name">راوتر أورانج واي فاي 6 الحديث (ZTE H188A)</h4>
+                <div class="showcase-ip-tag">
+                  <span>🌐 آي بي الراوتر:</span>
+                  <code id="display-gateway-ip">192.168.1.1</code>
+                </div>
+              </div>
+            </div>
+
             <p style="color:var(--text-muted);font-size:0.95rem;">
               اضغط على الزر البرتقالي أدناه لفتح صفحة الراوتر في تبويب جديد بجانب هذه الصفحة:
             </p>
@@ -280,7 +298,7 @@
               <div class="sticker-text">
                 <h5>بيانات الدخول الافتراضية (من ملصق الظهر):</h5>
                 <p>
-                  اسم المستخدم: <strong style="color:#fff;">admin</strong> (بحروف صغيرة)<br/>
+                  اسم المستخدم: <strong style="color:#fff;" id="router-sticker-user">user</strong> (بحروف صغيرة)<br/>
                   كلمة المرور: <strong style="color:var(--orange-primary);" id="router-sticker-pass">مطبوعة على ملصق ظهر الراوتر</strong> (انتبه للحروف الكبيرة والصغيرة).
                 </p>
               </div>

@@ -6,62 +6,13 @@
 const ROUTER_DATABASE = {
   routers: [
     {
-      id: 'orange-dg8045',
-      name: 'Orange VDSL Gateway (Huawei DG8045)',
-      nameAr: 'راوتر أورانج الأسود VDSL (هواوي DG8045)',
-      category: 'orange-official',
-      popular: true,
-      badge: 'الأكثر انتشاراً في الفروع',
-      image: './assets/images/orange_dg8045.jpg',
-      manufacturer: 'Huawei',
-      gatewayIp: '192.168.1.1',
-      defaultUsername: 'admin',
-      passwordNote: 'مطبوع في ملصق ظهر الراوتر (حروف كبيرة وصغيرة)',
-      wanPage: 'http://192.168.1.1/html/bbsp/wan/wan.asp',
-      quickSetupUrl: 'http://192.168.1.1/index.asp',
-      wifiPage: 'http://192.168.1.1/html/amp/wlanbasic/WlanBasic.asp?2G',
-      lineStatsPage: 'http://192.168.1.1/html/status/dslinfo.asp',
-      indicators: [
-        { name: 'Power', labelAr: 'الكهرباء', color: 'green', descAr: 'ثابتة خضراء تعني أن محول الكهرباء سليم' },
-        { name: 'DSL', labelAr: 'كابل الخط', color: 'green', descAr: 'ثابتة خضراء = حرارة السنترال واصلة بنجاح' },
-        { name: 'Internet', labelAr: 'الإنترنت', color: 'green', descAr: 'تنور أخضر بعد إدخال اليوزر والباسورد بنجاح' },
-        { name: 'WLAN', labelAr: 'الواي فاي', color: 'green', descAr: 'خضراء = شبكة الواي فاي تبث بنجاح' }
-      ],
-      selectors: {
-        login: { user: '#LoginId', pass: '#Password', submit: '#btnLogin' },
-        wan: { user: 'input[name="username"]', pass: 'input[name="password"]', submit: 'input[value="Apply"]' },
-        wifi: { ssid: '#INPUT_SSID2', pass: '#WpaPskKey', hide: '#Broadcast' }
-      },
-      simulator: {
-        steps: [
-          {
-            titleAr: 'تسجيل الدخول للراوتر',
-            hintAr: 'اكتب admin في اسم المستخدم، والباسورد من ملصق ظهر الراوتر',
-            activeField: 'login_pass',
-            screenType: 'huawei_login'
-          },
-          {
-            titleAr: 'معالج ضبط خدمة أورانج (Quick Setup)',
-            hintAr: 'الصق اسم المستخدم والباسورد المرسل في رسالة SMS من أورانج',
-            activeField: 'wan_credentials',
-            screenType: 'huawei_wan'
-          },
-          {
-            titleAr: 'تسمية شبكة الواي فاي والباسورد',
-            hintAr: 'اختر اسم شبكة واضح وكلمة سر قوية لحماية باقتك',
-            activeField: 'wifi_settings',
-            screenType: 'huawei_wifi'
-          }
-        ]
-      }
-    },
-    {
       id: 'orange-h188a',
       name: 'Orange Wi-Fi 6 Gateway (ZTE ZXHN H188A)',
       nameAr: 'راوتر أورانج واي فاي 6 الحديث (ZTE H188A)',
       category: 'orange-official',
       popular: true,
-      badge: 'الجيل السادس الأحدث',
+      featured: true,
+      badge: 'الجيل السادس الأحدث 🔥',
       image: './assets/images/orange_h188a.jpg',
       manufacturer: 'ZTE',
       gatewayIp: '192.168.1.1',
@@ -112,13 +63,63 @@ const ROUTER_DATABASE = {
       }
     },
     {
+      id: 'orange-dg8045',
+      name: 'Orange VDSL Gateway (Huawei DG8045)',
+      nameAr: 'راوتر أورانج الأسود VDSL (هواوي DG8045)',
+      category: 'orange-official',
+      popular: true,
+      badge: 'الأكثر انتشاراً في الفروع',
+      image: './assets/images/orange_dg8045.jpg',
+      manufacturer: 'Huawei',
+      gatewayIp: '192.168.1.1',
+      defaultUsername: 'admin',
+      passwordNote: 'مطبوع في ملصق ظهر الراوتر (حروف كبيرة وصغيرة)',
+      wanPage: 'http://192.168.1.1/html/bbsp/wan/wan.asp',
+      quickSetupUrl: 'http://192.168.1.1/index.asp',
+      wifiPage: 'http://192.168.1.1/html/amp/wlanbasic/WlanBasic.asp?2G',
+      lineStatsPage: 'http://192.168.1.1/html/status/dslinfo.asp',
+      indicators: [
+        { name: 'Power', labelAr: 'الكهرباء', color: 'green', descAr: 'ثابتة خضراء تعني أن محول الكهرباء سليم' },
+        { name: 'DSL', labelAr: 'كابل الخط', color: 'green', descAr: 'ثابتة خضراء = حرارة السنترال واصلة بنجاح' },
+        { name: 'Internet', labelAr: 'الإنترنت', color: 'green', descAr: 'تنور أخضر بعد إدخال اليوزر والباسورد بنجاح' },
+        { name: 'WLAN', labelAr: 'الواي فاي', color: 'green', descAr: 'خضراء = شبكة الواي فاي تبث بنجاح' }
+      ],
+      selectors: {
+        login: { user: '#LoginId', pass: '#Password', submit: '#btnLogin' },
+        wan: { user: 'input[name="username"]', pass: 'input[name="password"]', submit: 'input[value="Apply"]' },
+        wifi: { ssid: '#INPUT_SSID2', pass: '#WpaPskKey', hide: '#Broadcast' }
+      },
+      simulator: {
+        steps: [
+          {
+            titleAr: 'تسجيل الدخول للراوتر',
+            hintAr: 'اكتب admin في اسم المستخدم، والباسورد من ملصق ظهر الراوتر',
+            activeField: 'login_pass',
+            screenType: 'huawei_login'
+          },
+          {
+            titleAr: 'معالج ضبط خدمة أورانج (Quick Setup)',
+            hintAr: 'الصق اسم المستخدم والباسورد المرسل في رسالة SMS من أورانج',
+            activeField: 'wan_credentials',
+            screenType: 'huawei_wan'
+          },
+          {
+            titleAr: 'تسمية شبكة الواي فاي والباسورد',
+            hintAr: 'اختر اسم شبكة واضح وكلمة سر قوية لحماية باقتك',
+            activeField: 'wifi_settings',
+            screenType: 'huawei_wifi'
+          }
+        ]
+      }
+    },
+    {
       id: 'orange-h168n',
       name: 'Orange VDSL Gateway (ZTE ZXHN H168N)',
       nameAr: 'راوتر أورانج VDSL كلاسيك (ZTE H168N)',
       category: 'orange-official',
-      popular: false,
-      badge: 'راوتر الفروع الكلاسيكي',
-      image: './assets/images/orange_dg8045.jpg',
+      popular: true,
+      badge: 'راوتر الفروع الكلاسيكي ⭐',
+      image: './assets/images/orange_h168n.jpg',
       manufacturer: 'ZTE',
       gatewayIp: '192.168.1.1',
       defaultUsername: 'user',

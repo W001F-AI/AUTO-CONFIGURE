@@ -17,6 +17,7 @@ const ASSETS_TO_CACHE = [
   './assets/icons/icon-512.png',
   './assets/icons/favicon.png',
   './assets/images/orange_h188a.jpg',
+  './assets/images/orange_h168n.jpg',
   './assets/images/orange_dg8045.jpg',
   './assets/images/orange_splitter.jpg'
 ];
